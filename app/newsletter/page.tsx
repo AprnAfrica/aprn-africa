@@ -27,6 +27,7 @@ import {
   type NewsletterCard,
 } from "@/lib/queries/newsletter";
 import QuickNewsletterSignup from "@/components/QuickNewsletterSignup";
+import Image from "next/image";
 
 
 export const revalidate = 3600;
@@ -89,9 +90,22 @@ export default async function NewsletterPage() {
 
         {/* ── Hero ──────────────────────────────────────────────────────── */}
         <section className="relative pt-32 pb-20 border-b border-navy-800 overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03]"
+          {/* <div className="absolute inset-0 opacity-[0.03]"
             style={{ backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.5) 39px,rgba(255,255,255,.5) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.5) 39px,rgba(255,255,255,.5) 40px)" }}
-          />
+          /> */}
+          <div className="absolute inset-0 z-0">
+                      <Image
+                        src="/images/newletter-bg.jpg"
+                        alt="Pipeline aerial"
+                        fill
+                        sizes="100vw"
+                        className="object-cover opacity-40 mix-blend-luminosity"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-navy-900 via-navy-900/80 to-transparent" />
+                      <div className="absolute inset-0"
+                        style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(7,27,42,0.9) 100%)" }} />
+                    </div>
           <div className="max-w-360 mx-auto px-6 lg:px-12 relative z-10">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
