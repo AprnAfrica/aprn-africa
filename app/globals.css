@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-900: #071B2A;
+  --color-navy-800: #0D2436;
+  --color-navy-700: #15324A;
+  --color-gold-500: #D4A017;
+  --color-gold-400: #E5B83B;
+  --color-copper-500: #C97A2B;
+  --animate-ticker: ticker 65s linear infinite;
+}
+
+@theme inline {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+}
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-oswald: 'Oswald', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* will-change scoped to continuous-animation elements only */
+.animate-ticker {
+  will-change: transform;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #071B2A;
+  color: #E2E8F0;
+  overflow-x: hidden;
+}
+
+/* Keyboard focus indicator — visible on all interactive elements */
+:focus-visible {
+  outline: 2px solid #D4A017;
+  outline-offset: 2px;
+}
+
+/* Skip-to-content link — visually hidden until focused */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: #D4A017;
+  color: #071B2A;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #071B2A; }
+::-webkit-scrollbar-thumb { background: #15324A; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #D4A017; }
+
+.glass-panel {
+  background: rgba(13, 36, 54, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 160, 23, 0.1);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to right, #D4A017, #C97A2B);
+}

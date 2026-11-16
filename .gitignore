@@ -1,0 +1,85 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# env files
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# editor
+.idea/
+*.swp
+*.swo
+*.suo
+.vscode/settings.json
+.vscode/settings.local.json
+
+# certificates / keys
+*.pem
+*.p12
+*.key
+
+# documents — uploaded to cloud manually, never committed
+/public/documents/
+/documents/
+
+# website templates (large HTML files, not source code)
+/website-templates
+
+# supabase cli
+supabase/.temp/
+
+# claude code — local settings contain machine-specific paths
+/.claude
+
+# session / hook memory
+/.remember
+/.audit
+
+# internal planning (stays local)
+PLAN.md
+
+# GEM data archive + extracted datasets (large, third-party CC-BY data)
+/gem-data
+gem-data*.zip
+gem-download*.zip
+
+# research reports (generated locally, not source)
+/research-reports

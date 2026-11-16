@@ -1,0 +1,107 @@
+import { groq } from 'next-sanity'
+
+// ── Types ────────────────────────────────────────────────────────────────────
+
+export type InsightCategory = 'intelligence' | 'research' | 'editorial' | 'publication'
+
+export interface InsightCard {
+  _id: string
+  slug: string
+  category: InsightCategory
+  featured?: boolean
+  title: string
+  subtitle?: string
+  excerpt: string
+  publishDate: string
+  estimatedReadTime?: number
+  heroImage?: string
+  authorName: string
+  authorRole: string
+  authorImage?: string
+}
+
+export interface InsightDetail extends InsightCard {
+  keyInsights?: Array<{ value: string; label: string; icon?: string }>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body?: any[]
+  pullQuote?: string
+}
+
+// ── Field fragment (reused across queries) ────────────────────────────────────
+
+const CARD_FIELDS = groq`
+  _id,
+  "slug": slug.current,
+  "category": select(
+    _type == "editorialInsight"   => "editorial",
+    _type == "intelligenceUpdate" => "intelligence",
+    _type == "publication"        => "publication",
+    reportType == "briefing"      => "intelligence",
+    "research"
+  ),
+  featured,
+  "title": coalesce(title, headline),
+  subtitle,
+  "excerpt": coalesce(excerpt, executiveSummary, summary),
+  "publishDate": coalesce(publishDate, publishedAt),
+  estimatedReadTime,
+  "heroImage": coalesce(heroImage.asset->url, coverImage.asset->url),
+  "authorName": coalesce(author->name, authors[0]->name, "APRN Intelligence Desk"),
+  "authorRole": coalesce(author->title, authors[0]->title, "APRN Research Team"),
+  "authorImage": coalesce(author->photo.asset->url, authors[0]->photo.asset->url),
+`
+
+// ── Queries ───────────────────────────────────────────────────────────────────
+
+export const PAGE_SIZE = 9
+
+/** Initial page of insights — featured (1) + grid (PAGE_SIZE) */
+const ALL_TYPES = `["editorialInsight", "intelligenceUpdate", "publication"]`
+
+export const ALL_INSIGHTS_QUERY = groq`
+  *[_type in ${ALL_TYPES} && defined(slug.current)] | order(coalesce(publishDate, publishedAt) desc) [0...${PAGE_SIZE + 1}] {
+    ${CARD_FIELDS}
+  }
+`
+
+/** Load-more batch — called from server action with $start / $end */
+export const MORE_INSIGHTS_QUERY = groq`
+  *[_type in ${ALL_TYPES} && defined(slug.current)] | order(coalesce(publishDate, publishedAt) desc) [$start...$end] {
+    ${CARD_FIELDS}
+  }
+`
+
+/** Full article detail for /insights/[slug] */
+export const INSIGHT_BY_SLUG_QUERY = groq`
+  *[_type in ${ALL_TYPES} && slug.current == $slug][0] {
+    ${CARD_FIELDS}
+    keyInsights[]{ value, label, icon },
+    body,
+    pullQuote,
+  }
+`
+
+/** Static params — all slugs for generateStaticParams */
+export const INSIGHT_SLUGS_QUERY = groq`
+  *[_type in ${ALL_TYPES} && defined(slug.current)]{ "slug": slug.current }
+`
+
+/** Lightweight fetch for generateMetadata — no body */
+export const INSIGHT_META_QUERY = groq`
+  *[_type in ${ALL_TYPES} && slug.current == $slug][0] {
+    "title": coalesce(title, headline),
+    "excerpt": coalesce(excerpt, executiveSummary, summary),
+    "heroImage": coalesce(heroImage.asset->url, coverImage.asset->url),
+  }
+`
+
+/** Related articles for the sidebar (excludes current slug) */
+export const RELATED_INSIGHTS_QUERY = groq`
+  *[
+    _type in ${ALL_TYPES}
+    && defined(slug.current)
+    && slug.current != $slug
+  ] | order(coalesce(publishDate, publishedAt) desc) [0...3] {
+    ${CARD_FIELDS}
+  }
+`

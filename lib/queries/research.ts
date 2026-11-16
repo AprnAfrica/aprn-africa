@@ -1,0 +1,248 @@
+import { groq } from 'next-sanity'
+
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+export interface ResearchKeyMetric {
+  value: string
+  label: string
+  unit?: string
+  trend?: string
+}
+
+export interface RelatedResearchCard {
+  _id: string
+  slug: string
+  title: string
+  reportType?: string
+  publishDate: string
+  coverImageUrl?: string
+  authorName: string
+}
+
+export interface ResearchReportDetail {
+  _id: string
+  slug: string
+  title: string
+  reportType?: string
+  publishDate: string
+  executiveSummary?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body?: any[]
+  keyInsights?: ResearchKeyMetric[]
+  pullQuote?: string
+  coverImageUrl?: string
+  pdfUrl?: string
+  authorName: string
+  authorRole: string
+  relatedReports?: RelatedResearchCard[]
+}
+
+// ── Queries ───────────────────────────────────────────────────────────────────
+
+export const RESEARCH_BY_SLUG_QUERY = groq`
+  *[_type == "researchReport" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    reportType,
+    publishDate,
+    executiveSummary,
+    body,
+    keyInsights[]{ value, label, unit, trend },
+    pullQuote,
+    "coverImageUrl": coverImage.asset->url,
+    "pdfUrl": pdfAsset.asset->url,
+    "authorName": coalesce(authors[0]->name, "APRN Research Team"),
+    "authorRole": coalesce(authors[0]->title, "APRN Research Team"),
+    relatedReports[0...3]->{
+      _id,
+      title,
+      "slug": slug.current,
+      reportType,
+      publishDate,
+      "coverImageUrl": coverImage.asset->url,
+      "authorName": coalesce(authors[0]->name, "APRN Research Team"),
+    }
+  }
+`
+
+export const RESEARCH_SLUGS_QUERY = groq`
+  *[_type == "researchReport"]{ "slug": slug.current }
+`
+
+export const RESEARCH_META_QUERY = groq`
+  *[_type == "researchReport" && slug.current == $slug][0] {
+    title,
+    executiveSummary,
+    "coverImageUrl": coverImage.asset->url,
+    seo {
+      metaTitle,
+      metaDescription,
+      "ogImageUrl": ogImage.asset->url,
+      noIndex
+    }
+  }
+`
+
+export const RESEARCH_SLUG_EXISTS_QUERY = groq`
+  *[_type == "researchReport" && slug.current == $slug][0]{ "slug": slug.current }
+`
+
+export const RESEARCH_RECENT_FALLBACK_QUERY = groq`
+  *[_type == "researchReport" && slug.current != $slug && defined(slug.current)] | order(publishDate desc)[0...3] {
+    _id,
+    title,
+    "slug": slug.current,
+    reportType,
+    publishDate,
+    "coverImageUrl": coverImage.asset->url,
+    "authorName": coalesce(authors[0]->name, "APRN Research Team"),
+  }
+`
+
+// ── Homepage section ──────────────────────────────────────────────────────────
+
+export interface HomepageResearchCard {
+  _id: string
+  title: string
+  slug: string
+  reportType: string
+  publishDate: string
+  executiveSummary: string
+  estimatedReadTime?: number
+  topics: { name: string }[]
+}
+
+export interface HomepageResearchResult {
+  featured: HomepageResearchCard | null
+  featuredFallback: HomepageResearchCard | null
+  publications: HomepageResearchCard[]
+}
+
+export interface ResearchPageCard {
+  _id: string
+  title: string
+  slug: string
+  reportType: string
+  publishDate: string
+  executiveSummary: string
+  estimatedReadTime?: number
+  pageCount?: number
+  coverImageUrl?: string
+  topics: { name: string }[]
+}
+
+export interface ResearchPageResult {
+  featured: ResearchPageCard | null
+  featuredFallback: ResearchPageCard | null
+  secondary: ResearchPageCard[]
+  allReports: ResearchPageCard[]
+}
+
+const RESEARCH_CARD_FIELDS = groq`
+  _id,
+  title,
+  "slug": slug.current,
+  reportType,
+  publishDate,
+  executiveSummary,
+  estimatedReadTime,
+  pageCount,
+  "coverImageUrl": coverImage.asset->url,
+  "topics": topics[]->{ name },
+`
+
+export const RESEARCH_PAGE_QUERY = groq`
+  {
+    "featured": *[_type == "researchReport" && featured == true && defined(slug.current)] | order(publishDate desc)[0] {
+      ${RESEARCH_CARD_FIELDS}
+    },
+    "featuredFallback": *[_type == "researchReport" && defined(slug.current)] | order(publishDate desc)[0] {
+      ${RESEARCH_CARD_FIELDS}
+    },
+    "secondary": *[_type == "researchReport" && !(featured == true) && defined(slug.current)] | order(publishDate desc)[0...2] {
+      ${RESEARCH_CARD_FIELDS}
+    },
+    "allReports": *[_type == "researchReport" && defined(slug.current)] | order(publishDate desc) {
+      ${RESEARCH_CARD_FIELDS}
+    }
+  }
+`
+
+export interface DashboardOverviewResearchCard {
+  _id: string
+  title: string
+  slug: string
+  reportType: string
+  publishDate: string
+  topics: { name: string }[]
+}
+
+export interface DashboardResearchCard {
+  _id: string
+  title: string
+  slug: string
+  reportType: string
+  publishDate: string
+  estimatedReadTime?: number
+  topics: { name: string }[]
+  authorName: string
+}
+
+export const DASHBOARD_OVERVIEW_RESEARCH_QUERY = groq`
+  *[_type == "researchReport"] | order(publishDate desc)[0...3] {
+    _id,
+    title,
+    "slug": slug.current,
+    reportType,
+    publishDate,
+    "topics": topics[]->{ name },
+  }
+`
+
+export const DASHBOARD_RESEARCH_QUERY = groq`
+  *[_type == "researchReport"] | order(publishDate desc)[0...30] {
+    _id,
+    title,
+    "slug": slug.current,
+    reportType,
+    publishDate,
+    estimatedReadTime,
+    "topics": topics[]->{ name },
+    "authorName": coalesce(authors[0]->name, "APRN Research Team"),
+  }
+`
+
+export const HOMEPAGE_RESEARCH_QUERY = groq`
+  {
+    "featured": *[_type == "researchReport" && featured == true] | order(publishDate desc)[0] {
+      _id,
+      title,
+      "slug": slug.current,
+      reportType,
+      publishDate,
+      executiveSummary,
+      estimatedReadTime,
+      "topics": topics[]->{ name },
+    },
+    "featuredFallback": *[_type == "researchReport"] | order(publishDate desc)[0] {
+      _id,
+      title,
+      "slug": slug.current,
+      reportType,
+      publishDate,
+      executiveSummary,
+      estimatedReadTime,
+      "topics": topics[]->{ name },
+    },
+    "publications": *[_type == "researchReport"] | order(publishDate desc)[0...4] {
+      _id,
+      title,
+      "slug": slug.current,
+      reportType,
+      publishDate,
+      executiveSummary,
+      "topics": topics[]->{ name },
+    }
+  }
+`
