@@ -61,7 +61,7 @@ export default function QuickNewsletterSignup() {
             disabled={loading}
             className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-sm disabled:opacity-60 whitespace-nowrap"
           >
-            {loading ? "Joining..." : "Subscribe Free"}
+            {loading ? "Joining..." : "Subscribe"}
           </button>
         </form>
       )}
