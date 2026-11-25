@@ -107,9 +107,9 @@ export default function SavedPageClient({ initialItems }: { initialItems: SavedI
           {visible.map((item) => (
             <div
               key={item.id}
-              className="bg-navy-800 border border-white/5 p-6 flex gap-5 hover:border-gold-500/20 transition-colors group"
+              className="bg-navy-800 border border-white/5 p-4 sm:p-6 flex gap-3 sm:gap-5 hover:border-gold-500/20 transition-colors group"
             >
-              <div className="w-10 h-10 bg-navy-900 border border-white/5 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="hidden sm:flex w-10 h-10 bg-navy-900 border border-white/5 items-center justify-center shrink-0 mt-0.5">
                 <i className="fa-solid fa-file-lines text-slate-500 group-hover:text-gold-500 transition-colors text-sm" />
               </div>
 
@@ -130,7 +130,7 @@ export default function SavedPageClient({ initialItems }: { initialItems: SavedI
               <div className="flex flex-col gap-2 shrink-0">
                 <Link
                   href={getItemHref(item.item_type, item.item_slug)}
-                  className="w-8 h-8 bg-navy-900 border border-white/5 flex items-center justify-center hover:border-gold-500/30 transition-colors group/btn"
+                  className="w-10 h-10 bg-navy-900 border border-white/5 flex items-center justify-center hover:border-gold-500/30 transition-colors group/btn"
                   title="Read"
                 >
                   <i className="fa-solid fa-arrow-up-right-from-square text-slate-500 group-hover/btn:text-gold-500 transition-colors text-[10px]" />
@@ -138,7 +138,7 @@ export default function SavedPageClient({ initialItems }: { initialItems: SavedI
                 <button
                   onClick={() => handleRemove(item.id)}
                   disabled={deleting === item.id}
-                  className="w-8 h-8 bg-navy-900 border border-white/5 flex items-center justify-center hover:border-red-500/30 transition-colors group/btn disabled:opacity-40"
+                  className="w-10 h-10 bg-navy-900 border border-white/5 flex items-center justify-center hover:border-red-500/30 transition-colors group/btn disabled:opacity-40"
                   title="Remove"
                 >
                   {deleting === item.id ? (
