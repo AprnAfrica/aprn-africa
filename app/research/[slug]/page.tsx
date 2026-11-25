@@ -6,8 +6,10 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import TableOfContents from "@/components/TableOfContents";
 import NewsletterReadPrompt from "@/components/NewsletterReadPrompt";
+import MemberGate from "@/components/MemberGate";
 import { extractHeadings } from "@/lib/extractHeadings";
 import { sanityFetch } from "@/lib/sanity/fetch";
+import { isAuthenticated } from "@/lib/auth-check";
 import type { Metadata } from "next";
 import {
   RESEARCH_BY_SLUG_QUERY,
@@ -221,9 +223,10 @@ export default async function ResearchReportPage({
 }) {
   const { slug } = await params;
 
-  const [report, recentFallback] = await Promise.all([
+  const [report, recentFallback, authed] = await Promise.all([
     sanityFetch<ResearchReportDetail | null>(RESEARCH_BY_SLUG_QUERY, { slug }, ["researchReport"]),
     sanityFetch<RelatedResearchCard[]>(RESEARCH_RECENT_FALLBACK_QUERY, { slug }, ["researchReport"]),
+    isAuthenticated(),
   ]);
 
   if (!report) notFound();
@@ -347,7 +350,7 @@ export default async function ResearchReportPage({
                     </div>
                   </div>
                   <div className="space-y-2">
-                    {report.pdfUrl ? (
+                    {report.pdfUrl && authed ? (
                       <a
                         href={report.pdfUrl}
                         target="_blank"
@@ -358,6 +361,15 @@ export default async function ResearchReportPage({
                         <i className="fa-regular fa-file-pdf" />
                         Download PDF
                       </a>
+                    ) : report.pdfUrl && !authed ? (
+                      <Link
+                        href="/register"
+                        className="flex items-center justify-center gap-2 w-full py-3 text-xs font-bold uppercase tracking-wider transition-colors"
+                        style={{ backgroundColor: "#D4A017", color: "#071B2A" }}
+                      >
+                        <i className="fa-solid fa-lock text-xs" />
+                        Sign Up to Download
+                      </Link>
                     ) : (
                       <Link
                         href="/contact"
@@ -430,11 +442,14 @@ export default async function ResearchReportPage({
 
               {/* Full body */}
               {report.body && report.body.length > 0 && (
-                <>
-                  <PortableText value={report.body} components={lightComponents} />
-                  {/* Newsletter prompt — fires when reader reaches the end of the article */}
-                  <NewsletterReadPrompt />
-                </>
+                authed ? (
+                  <>
+                    <PortableText value={report.body} components={lightComponents} />
+                    <NewsletterReadPrompt />
+                  </>
+                ) : (
+                  <MemberGate />
+                )
               )}
 
             </article>

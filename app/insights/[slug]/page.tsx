@@ -5,8 +5,10 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { PortableTextRenderer } from "@/components/PortableTextRenderer";
 import NewsletterReadPrompt from "@/components/NewsletterReadPrompt";
+import MemberGate from "@/components/MemberGate";
 import SaveButton from "@/components/SaveButton";
 import { sanityFetch } from "@/lib/sanity/fetch";
+import { isAuthenticated } from "@/lib/auth-check";
 import {
   INSIGHT_BY_SLUG_QUERY,
   INSIGHT_SLUGS_QUERY,
@@ -115,9 +117,10 @@ export default async function ArticlePage({
 
   const INSIGHT_TAGS = ["editorialInsight", "intelligenceUpdate", "publication"];
 
-  const [article, related] = await Promise.all([
+  const [article, related, authed] = await Promise.all([
     sanityFetch<InsightDetail | null>(INSIGHT_BY_SLUG_QUERY, { slug }, INSIGHT_TAGS),
     sanityFetch<InsightCard[]>(RELATED_INSIGHTS_QUERY, { slug }, INSIGHT_TAGS),
+    isAuthenticated(),
   ]);
 
   if (!article) {
@@ -335,13 +338,17 @@ export default async function ArticlePage({
 
               {/* Body text */}
               {article.body && article.body.length > 0 && (
-                <div className="prose-article">
-                  <PortableTextRenderer value={article.body} />
-                </div>
+                authed ? (
+                  <>
+                    <div className="prose-article">
+                      <PortableTextRenderer value={article.body} />
+                    </div>
+                    <NewsletterReadPrompt />
+                  </>
+                ) : (
+                  <MemberGate dark />
+                )
               )}
-
-              {/* Newsletter prompt — fires when reader reaches end of article */}
-              {article.body && article.body.length > 0 && <NewsletterReadPrompt />}
 
               {/* -- Author card (mobile — below body) -- */}
               <div className="lg:hidden mt-12 pt-8 border-t border-navy-800">
