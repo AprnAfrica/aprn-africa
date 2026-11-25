@@ -11,6 +11,7 @@ const MotionLink = motion(Link);
 const navLinks = [
   { href: "/about", label: "About" },
   { href: "/leadership", label: "Leadership" },
+  { href: "/talent", label: "Talent Initiative" },
   { href: "/training", label: "Training" },
   { href: "/partnerships", label: "Partnerships" },
   { href: "/research", label: "Research" },
