@@ -4,6 +4,10 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { talentApplicationSchema } from "@/lib/validation";
 import { Resend } from "resend";
 
+function esc(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
 
@@ -143,8 +147,8 @@ export async function POST(req: Request) {
         return;
       }
       const resend = new Resend(resendKey);
-      const applicantName = parsed.data.fullName;
-      const applicantEmail = parsed.data.email;
+      const applicantName = esc(parsed.data.fullName);
+      const applicantEmail = esc(parsed.data.email);
 
       const confirmationPromise = resend.emails.send({
         from: "APRN Africa <newsletter@aprn-africa.org>",
@@ -180,11 +184,11 @@ export async function POST(req: Request) {
             <table style="width:100%;border-collapse:collapse;">
               <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;width:140px;">Name</td><td style="padding:8px 0;font-size:14px;">${applicantName}</td></tr>
               <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Email</td><td style="padding:8px 0;font-size:14px;"><a href="mailto:${applicantEmail}" style="color:#D4A017;">${applicantEmail}</a></td></tr>
-              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Phone</td><td style="padding:8px 0;font-size:14px;">${parsed.data.phone}</td></tr>
-              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">University</td><td style="padding:8px 0;font-size:14px;">${parsed.data.university}</td></tr>
-              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Discipline</td><td style="padding:8px 0;font-size:14px;">${parsed.data.discipline}</td></tr>
-              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Graduation</td><td style="padding:8px 0;font-size:14px;">${parsed.data.graduationYear}</td></tr>
-              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Employed</td><td style="padding:8px 0;font-size:14px;">${parsed.data.currentlyEmployed ? `Yes — ${parsed.data.employer ?? ""}` : "No"}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Phone</td><td style="padding:8px 0;font-size:14px;">${esc(parsed.data.phone)}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">University</td><td style="padding:8px 0;font-size:14px;">${esc(parsed.data.university)}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Discipline</td><td style="padding:8px 0;font-size:14px;">${esc(parsed.data.discipline)}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Graduation</td><td style="padding:8px 0;font-size:14px;">${esc(String(parsed.data.graduationYear))}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Employed</td><td style="padding:8px 0;font-size:14px;">${parsed.data.currentlyEmployed ? `Yes — ${esc(parsed.data.employer ?? "")}` : "No"}</td></tr>
             </table>
             <div style="margin-top:24px;padding:16px;background:#0D2436;text-align:center;">
               <a href="https://aprn-africa.org/admin/talent" style="color:#D4A017;font-size:14px;font-weight:bold;text-decoration:none;">Review in Admin Panel &rarr;</a>

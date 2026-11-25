@@ -1,10 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-export async function POST(req: NextRequest) {
-  const { name, org, email, country, type, message } = await req.json();
+function esc(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
 
-  if (!name || !email || !message) {
+export async function POST(req: NextRequest) {
+  const raw = await req.json();
+  const name    = esc(String(raw.name ?? ""));
+  const org     = esc(String(raw.org ?? ""));
+  const email   = esc(String(raw.email ?? ""));
+  const country = esc(String(raw.country ?? ""));
+  const type    = esc(String(raw.type ?? ""));
+  const message = esc(String(raw.message ?? ""));
+
+  if (!raw.name || !raw.email || !raw.message) {
     return NextResponse.json({ message: "Name, email, and message are required." }, { status: 400 });
   }
 
@@ -20,8 +30,8 @@ export async function POST(req: NextRequest) {
   const { error } = await resend.emails.send({
     from:     "APRN Contact Form <newsletter@aprn-africa.org>",
     to:       ["info@aprn-africa.org"],
-    replyTo:  email,
-    subject:  `[APRN Inquiry] ${type || "General"} — ${org || name}`,
+    replyTo:  String(raw.email),
+    subject:  `[APRN Inquiry] ${raw.type || "General"} — ${raw.org || raw.name}`,
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#071B2A;color:#ffffff;padding:40px;">
         <div style="border-bottom:3px solid #D4A017;padding-bottom:20px;margin-bottom:24px;">
