@@ -281,7 +281,6 @@ export default function AdminTalentClient({ applications: initial }: { applicati
                 <DrawerRow label="University" value={selected.university} />
                 <DrawerRow label="Discipline" value={selected.discipline} />
                 <DrawerRow label="Graduation" value={String(selected.graduation_year)} />
-                <DrawerRow label="Degree" value="First Class" />
                 <DrawerRow label="Employed" value={selected.currently_employed ? `Yes — ${selected.employer ?? ""}` : "No"} />
               </DrawerSection>
 

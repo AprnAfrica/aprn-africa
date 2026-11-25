@@ -4,7 +4,7 @@ import type { SiteSettingsFooter, FooterLink } from "@/lib/queries/siteSettings"
 
 const DEFAULT_INITIATIVES: FooterLink[] = [
   { label: "Engineering Academy",   href: "/training" },
-  { label: "Talent Initiative",     href: "/talent" },
+  { label: "Pipeline Training",     href: "/talent" },
   { label: "Policy Think-Tank",     href: "/insights" },
   { label: "Data Observatory",      href: "/research" },
   { label: "Pipeline Intelligence", href: "/intelligence/pipelines" },
@@ -50,7 +50,7 @@ function NavList({ items }: { items: FooterLink[] }) {
 export default function Footer({ siteSettings }: FooterProps) {
   const email       = siteSettings?.contactEmail    ?? "info@aprn-africa.org";
   const description = siteSettings?.footerDescription ?? "Building the knowledge infrastructure for Africa\u2019s energy transition through rigorous research and elite training.";
-  const linkedin    = siteSettings?.socialLinks?.linkedin ?? "https://www.linkedin.com/company/aprn-africa";
+  const linkedin    = siteSettings?.socialLinks?.linkedin ?? "https://www.linkedin.com/company/african-pipeline-resource-network/posts/";
   const twitter     = siteSettings?.socialLinks?.twitter  ?? "https://twitter.com/aprnafrica";
 
   const initiatives  = siteSettings?.footerInitiatives?.length  ? siteSettings.footerInitiatives  : DEFAULT_INITIATIVES;

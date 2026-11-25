@@ -222,7 +222,7 @@ export default function TalentApplyPage() {
               Application Submitted
             </h1>
             <p className="text-slate-400 mb-6 max-w-120 mx-auto">
-              Your application for the APRN Pipeline Talent Initiative has
+              Your application for the APRN Pipeline Training Programme has
               been received. We will review your submission and contact you
               at <strong className="text-white">{email}</strong>.
             </p>
@@ -265,7 +265,7 @@ export default function TalentApplyPage() {
             className="text-3xl sm:text-4xl font-bold text-white mb-2"
             style={{ fontFamily: "var(--font-playfair), serif" }}
           >
-            Apply — Pipeline Talent Initiative
+            Apply — Pipeline Training Programme
           </h1>
           <p className="text-slate-400 mb-10">
             All fields marked with * are required.
@@ -478,14 +478,14 @@ export default function TalentApplyPage() {
 
                 <FileInput
                   label="Degree Certificate *"
-                  hint="Your First Class engineering degree certificate"
+                  hint="Your engineering degree certificate"
                   file={degreeCert}
                   onFile={setDegreeCert}
                 />
 
                 <FileInput
-                  label="NYSC Certificate *"
-                  hint="Discharge or exemption certificate"
+                  label="NYSC Certificate or African Equivalent *"
+                  hint="Discharge certificate or equivalent national service documentation"
                   file={nyscCert}
                   onFile={setNyscCert}
                 />

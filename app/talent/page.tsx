@@ -5,13 +5,13 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Pipeline Talent Initiative — APRN Africa",
+  title: "Pipeline Training Programme — APRN Africa",
   description:
-    "APRN is accepting applications from First Class engineering graduates (2021–2026) for specialised pipeline industry training in partnership with EITEP. Apply now.",
+    "APRN is accepting applications from engineering graduates for specialised pipeline industry training in partnership with the Euro Institute for Information and Technology Transfer (EITEP). Apply now.",
   openGraph: {
-    title: "APRN Pipeline Talent Initiative",
+    title: "APRN Pipeline Training Programme",
     description:
-      "First Class engineering graduates from African universities — apply for APRN's fully funded pipeline engineering training programme starting 2027.",
+      "Engineering graduates from African universities — apply for APRN's pipeline engineering training programme starting 2027.",
     type: "website",
     url: "https://aprn-africa.org/talent",
     images: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         url: "/images/female-engineer-training.png",
         width: 1200,
         height: 630,
-        alt: "APRN Pipeline Talent Initiative",
+        alt: "APRN Pipeline Training Programme",
       },
     ],
   },
@@ -28,12 +28,12 @@ export const metadata: Metadata = {
 const ELIGIBILITY = [
   {
     icon: "fa-graduation-cap",
-    label: "First Class Degree",
-    desc: "In any engineering discipline from an accredited African university",
+    label: "Engineering Graduate",
+    desc: "Degree in mechanical, chemical, civil, petroleum, or related engineering discipline from an accredited African university",
   },
   {
     icon: "fa-calendar-check",
-    label: "Graduated 2021–2026",
+    label: "Graduate or Early-Career",
     desc: "Fresh graduates or engineers with up to five years of industry experience",
   },
   {
@@ -145,15 +145,15 @@ export default function TalentPage() {
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-240 anim-reveal-up anim-d1"
               style={{ fontFamily: "var(--font-playfair), serif" }}
             >
-              Pipeline Talent
+              Pipeline Training
               <br />
-              <span className="text-gold-500">Initiative</span>
+              <span className="text-gold-500">Programme</span>
             </h1>
             <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-160 leading-relaxed anim-reveal-up anim-d2">
-              APRN is building Africa&apos;s next generation of pipeline
-              engineering professionals. We are selecting First Class
-              engineering graduates from across the continent for specialised
-              industry training delivered in partnership with EITEP.
+              Africa&apos;s pipeline infrastructure is growing, and it needs
+              skilled engineers who understand it. The APRN Pipeline Training
+              Programme gives young engineers practical, industry-relevant skills
+              in pipeline design, operations, integrity and safety.
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4 anim-reveal-up anim-d3">
@@ -172,12 +172,11 @@ export default function TalentPage() {
               </a>
             </div>
 
-            <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10">
+            <div className="mt-16 grid grid-cols-3 gap-6 sm:gap-10">
               {[
-                { value: "First Class", label: "Required Degree" },
-                { value: "2021–2026", label: "Graduation Years" },
                 { value: "5 Days", label: "Intensive Training" },
-                { value: "Jan 2027", label: "Programme Start" },
+                { value: "EITEP", label: "Training Partner" },
+                { value: "2027", label: "Programme Start" },
               ].map((s) => (
                 <div key={s.label}>
                   <p
@@ -222,7 +221,7 @@ export default function TalentPage() {
                 {
                   icon: "fa-users-gear",
                   title: "APRN's Role",
-                  text: "APRN anchors pipeline talent within Africa. Through partnerships with EITEP and industry leaders, we provide internationally certified training that positions African engineers for global-standard careers.",
+                  text: "APRN anchors pipeline talent within Africa. Through our partnership with the Euro Institute for Information and Technology Transfer (EITEP) and industry leaders, we provide internationally recognised training that positions African engineers for global-standard careers.",
                 },
               ].map((card) => (
                 <div
@@ -260,9 +259,10 @@ export default function TalentPage() {
               Who Can Apply
             </h2>
             <p className="mt-4 text-slate-400 max-w-180">
-              This programme is deliberately selective. We are looking for
-              exceptional graduates with demonstrated academic excellence and a
-              genuine commitment to the pipeline industry.
+              Graduate and early-career engineers in mechanical, chemical, civil,
+              petroleum and related fields. Mid-career professionals moving into
+              pipeline roles are also welcome. Women engineers are strongly
+              encouraged to apply.
             </p>
 
             <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -296,7 +296,7 @@ export default function TalentPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <i className="fa-solid fa-check text-gold-500 mt-0.5 shrink-0" />
-                  NYSC discharge or exemption certificate
+                  NYSC discharge certificate or African equivalent
                 </li>
                 <li className="flex items-start gap-2">
                   <i className="fa-solid fa-check text-gold-500 mt-0.5 shrink-0" />
@@ -325,8 +325,8 @@ export default function TalentPage() {
             </h2>
             <p className="mt-4 text-slate-400 max-w-180">
               Pipeline Inspection &amp; Integrity Management — delivered in
-              partnership with EITEP. Half-day intensive sessions (9:00 am –
-              1:00 pm).
+              partnership with the Euro Institute for Information and Technology
+              Transfer (EITEP). Half-day intensive sessions.
             </p>
 
             <div className="mt-12 space-y-4">
@@ -362,7 +362,7 @@ export default function TalentPage() {
 
             <p className="mt-8 text-sm text-slate-500 flex items-center gap-2">
               <i className="fa-solid fa-award text-gold-500/40" />
-              Curriculum delivered by EITEP — www.eitep-training.com
+              Curriculum delivered in partnership with EITEP
             </p>
           </div>
         </section>
