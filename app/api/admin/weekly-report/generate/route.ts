@@ -4,6 +4,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { client as sanityClient } from "@/lib/sanity/client";
 import Anthropic from "@anthropic-ai/sdk";
 
+export const maxDuration = 60;
+
 function isAdmin(email: string | undefined): boolean {
   const allowed = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
   return allowed.includes(email?.toLowerCase() ?? "");
@@ -38,7 +40,7 @@ async function fetchGitHubCommits(since: Date, until: Date): Promise<
   if (!token) return { error: "GITHUB_TOKEN not set" };
   try {
     const res = await fetch(
-      `https://api.github.com/repos/Casyvina/aprn-africa/commits?since=${since.toISOString()}&until=${until.toISOString()}&per_page=50`,
+      `https://api.github.com/repos/AprnAfrica/aprn-africa/commits?since=${since.toISOString()}&until=${until.toISOString()}&per_page=50`,
       { headers: { Authorization: `Bearer ${token}`, "User-Agent": "aprn-africa" } }
     );
     if (!res.ok) {

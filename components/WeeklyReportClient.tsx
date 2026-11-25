@@ -103,7 +103,9 @@ export default function WeeklyReportClient({ pastReports }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      const json = await res.json();
+      const text = await res.text();
+      if (!text) throw new Error("Empty response — the server may have timed out. Try again.");
+      const json = JSON.parse(text);
       if (!res.ok) throw new Error(json.error ?? "Failed to generate");
       setContent(json.content);
       setPeriodLabel(json.label);
