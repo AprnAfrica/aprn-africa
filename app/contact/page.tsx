@@ -84,26 +84,21 @@ export default function ContactPage() {
             />
           </div>
 
-          <motion.div
-            className="relative z-10 max-w-5xl mx-auto w-full"
-            initial="hidden" animate="visible"
-            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }}
-          >
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-gold-500/30 bg-gold-500/10">
+          <div className="relative z-10 max-w-5xl mx-auto w-full">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-gold-500/30 bg-gold-500/10">
               <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse" />
               <span className="text-xs font-semibold text-gold-500 uppercase tracking-widest">Institutional Access</span>
-            </motion.div>
-            <motion.h1
-              variants={fadeUp}
+            </div>
+            <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
               style={{ fontFamily: "var(--font-oswald), sans-serif" }}
             >
               Connect With <span className="text-gold-500">APRN</span>
-            </motion.h1>
-            <motion.p variants={fadeUp} className="text-xl text-slate-400 max-w-2xl leading-relaxed">
+            </h1>
+            <p className="text-xl text-slate-400 max-w-2xl leading-relaxed">
               A strategic engineering platform and globally credible collaboration network for Africa&apos;s infrastructure future.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
         </section>
 
         {/* -- Contact Overview & Channels ------------------------- */}

@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import type { DashboardResearchCard } from "@/lib/queries/research";
 
 const TOPIC_COLOR: Record<string, string> = {
@@ -31,12 +30,6 @@ function fmtDate(d: string) {
 function topicColor(topics: { name: string }[]) {
   return TOPIC_COLOR[topics?.[0]?.name ?? ""] ?? "text-slate-400";
 }
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" as const } },
-};
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.06 } } };
 
 export default function ResearchPageClient({
   papers,
@@ -109,11 +102,8 @@ export default function ResearchPageClient({
     <div className="flex flex-col gap-8 max-w-275">
 
       {/* Header */}
-      <motion.div
-        className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6"
-        initial="hidden" animate="visible" variants={stagger}
-      >
-        <motion.div variants={fadeUp}>
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6">
+        <div>
           <h2
             className="text-2xl sm:text-3xl font-bold text-white"
             style={{ fontFamily: "var(--font-playfair), serif" }}
@@ -123,8 +113,8 @@ export default function ResearchPageClient({
           <p className="text-sm text-slate-400 mt-1">
             Your personalised intelligence feed — latest papers, briefs, and technical reports.
           </p>
-        </motion.div>
-        <motion.div variants={fadeUp} className="flex items-center gap-3 shrink-0">
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
           <div className="relative">
             <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs pointer-events-none" />
             <input
@@ -135,23 +125,19 @@ export default function ResearchPageClient({
               className="bg-navy-800 border border-white/10 pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-gold-500/40 transition-colors w-full sm:w-52"
             />
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Stats strip */}
-      <motion.div
-        className="grid grid-cols-2 sm:grid-cols-4 gap-4"
-        initial="hidden" animate="visible" variants={stagger}
-      >
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
           { label: "Papers Available", value: papers.length > 0 ? `${papers.length}+` : "0", icon: "fa-file-lines" },
           { label: "New This Month",   value: String(newCount),   icon: "fa-sparkles" },
           { label: "Saved by You",     value: String(savedCount), icon: "fa-bookmark" },
           { label: "Topics",           value: String(filters.length - 1), icon: "fa-tags" },
         ].map((s) => (
-          <motion.div
+          <div
             key={s.label}
-            variants={fadeUp}
             className="bg-navy-800 border border-white/5 p-4 flex items-center gap-3"
           >
             <div className="w-8 h-8 bg-navy-900 border border-white/5 flex items-center justify-center shrink-0">
@@ -163,17 +149,13 @@ export default function ResearchPageClient({
               </p>
               <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-0.5 leading-tight">{s.label}</p>
             </div>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
       {/* Membership gate — only shown when there are papers */}
       {papers.length > 0 && (
-        <motion.div
-          className="bg-gold-500/5 border border-gold-500/20 p-5 flex items-start gap-4"
-          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.25, ease: "easeOut" }}
-        >
+        <div className="bg-gold-500/5 border border-gold-500/20 p-5 flex items-start gap-4">
           <i className="fa-solid fa-lock text-gold-500 text-sm mt-0.5 shrink-0" />
           <div className="flex-1">
             <p className="text-sm font-semibold text-white mb-1">Full archive requires Professional membership</p>
@@ -184,16 +166,12 @@ export default function ResearchPageClient({
               </Link>
             </p>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Filter tabs */}
       {filters.length > 1 && (
-        <motion.div
-          className="flex flex-wrap gap-2"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 0.35, delay: 0.3 }}
-        >
+        <div className="flex flex-wrap gap-2">
           {filters.map((f) => (
             <button
               key={f}
@@ -207,7 +185,7 @@ export default function ResearchPageClient({
               {f}
             </button>
           ))}
-        </motion.div>
+        </div>
       )}
 
       {/* Sort row */}
@@ -233,18 +211,13 @@ export default function ResearchPageClient({
           </button>
         </div>
       ) : (
-        <motion.div
-          className="flex flex-col gap-3"
-          initial="hidden" animate="visible"
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
-        >
+        <div className="flex flex-col gap-3">
           {filtered.map((paper) => {
             const isSaved = paper._id in localSaved;
             const primaryTopic = paper.topics?.[0]?.name ?? paper.reportType;
             return (
-              <motion.div
+              <div
                 key={paper._id}
-                variants={fadeUp}
                 className="bg-navy-800 border border-white/5 p-6 flex gap-5 hover:border-gold-500/20 transition-colors group"
               >
                 <div className="w-10 h-10 bg-navy-900 border border-white/5 flex items-center justify-center shrink-0 mt-0.5">
@@ -303,10 +276,10 @@ export default function ResearchPageClient({
                     )}
                   </button>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       )}
     </div>
   );

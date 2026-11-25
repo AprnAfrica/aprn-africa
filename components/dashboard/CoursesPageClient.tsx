@@ -2,18 +2,12 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import type { TrainingProgramCard } from "@/lib/queries/training";
 
 const LEVEL_STYLE: Record<string, string> = {
   Foundation:   "text-emerald-400 border-emerald-400/30",
   Intermediate: "text-gold-500 border-gold-500/30",
   Advanced:     "text-blue-400 border-blue-400/30",
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" as const } },
 };
 
 export default function CoursesPageClient({ courses }: { courses: TrainingProgramCard[] }) {
@@ -42,12 +36,8 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
     <div className="flex flex-col gap-8 max-w-275">
 
       {/* Header */}
-      <motion.div
-        className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6"
-        initial="hidden" animate="visible"
-        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
-      >
-        <motion.div variants={fadeUp}>
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6">
+        <div>
           <h2
             className="text-2xl sm:text-3xl font-bold text-white"
             style={{ fontFamily: "var(--font-playfair), serif" }}
@@ -57,8 +47,8 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
           <p className="text-sm text-slate-400 mt-1">
             Professionally accredited programmes for pipeline engineers across Africa.
           </p>
-        </motion.div>
-        <motion.div variants={fadeUp} className="flex items-center gap-2 shrink-0">
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
           <div className="relative">
             <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs pointer-events-none" />
             <input
@@ -69,15 +59,11 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
               className="bg-navy-800 border border-white/10 pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-gold-500/40 transition-colors w-full sm:w-52"
             />
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Enrolment banner — static until enrolment tracking is built */}
-      <motion.div
-        className="bg-navy-800 border border-white/5 border-dashed p-5 sm:p-8 flex flex-col sm:flex-row items-center gap-5 sm:gap-6"
-        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
-      >
+      <div className="bg-navy-800 border border-white/5 border-dashed p-5 sm:p-8 flex flex-col sm:flex-row items-center gap-5 sm:gap-6">
         <div className="w-12 h-12 bg-navy-900 border border-white/5 flex items-center justify-center shrink-0">
           <i className="fa-solid fa-graduation-cap text-slate-600 text-lg" />
         </div>
@@ -87,15 +73,11 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
             Enrol in any programme below to track your progress from this dashboard.
           </p>
         </div>
-      </motion.div>
+      </div>
 
       {/* Category filter */}
       {filters.length > 1 && (
-        <motion.div
-          className="flex flex-wrap gap-2"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 0.35, delay: 0.25 }}
-        >
+        <div className="flex flex-wrap gap-2">
           {filters.map((f) => (
             <button
               key={f}
@@ -109,7 +91,7 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
               {f}
             </button>
           ))}
-        </motion.div>
+        </div>
       )}
 
       {/* Course grid */}
@@ -128,17 +110,12 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
           </button>
         </div>
       ) : (
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-5"
-          initial="hidden" animate="visible"
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {filtered.map((course) => {
             const levelStyle = LEVEL_STYLE[course.level] ?? "text-slate-400 border-white/10";
             return (
-              <motion.div
+              <div
                 key={course._id}
-                variants={fadeUp}
                 className="bg-navy-800 border border-white/5 p-6 flex flex-col gap-4 hover:border-gold-500/20 transition-colors group"
               >
                 <div className="flex items-start justify-between gap-3">
@@ -182,10 +159,10 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
                 >
                   View Programme →
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       )}
 
       {/* Footer */}

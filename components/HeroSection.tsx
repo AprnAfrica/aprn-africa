@@ -111,27 +111,16 @@ export default function HeroSection({
       </div>
 
       <div className="relative z-10 max-w-360 mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        {/* Left column — staggered entrance */}
-        <motion.div
-          className="lg:col-span-8"
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.13 } } }}
-        >
-          <motion.div
-            variants={fadeUp}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 mb-8"
-          >
+        {/* Left column */}
+        <div className="lg:col-span-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse" />
             <span className="text-xs font-semibold text-gold-500 uppercase tracking-widest">
               {badge}
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-8 text-white"
-          >
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-8 text-white">
             {headline ? (
               <AccentHeading text={headline} accent={headlineAccent} />
             ) : (
@@ -141,16 +130,13 @@ export default function HeroSection({
                 in Africa
               </>
             )}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={fadeUp}
-            className="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed font-light border-l-2 border-gold-500/50 pl-6"
-          >
+          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed font-light border-l-2 border-gold-500/50 pl-6">
             {subtext_}
-          </motion.p>
+          </p>
 
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button className="px-8 py-4 bg-gold-500 hover:bg-gold-400 active:scale-95 text-navy-900 font-bold tracking-wide transition-all rounded-sm shadow-[0_0_20px_rgba(212,160,23,0.2)] flex items-center justify-center gap-3 cursor-pointer">
               {btn1} <i className="fa-solid fa-arrow-right" />
             </button>
@@ -158,16 +144,11 @@ export default function HeroSection({
               {btn2}{" "}
               <i className="fa-solid fa-handshake text-gold-500 group-hover:scale-110 transition-transform" />
             </button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* Right column — metrics panel slides in */}
-        <motion.div
-          className="lg:col-span-4 hidden lg:block"
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.55, ease: "easeOut" as const }}
-        >
+        {/* Right column — metrics panel */}
+        <div className="lg:col-span-4 hidden lg:block">
           <div className="glass-panel p-6 rounded-sm relative">
             <div className="absolute -top-3 -right-3 w-20 h-20 bg-gold-500/10 blur-xl rounded-full" />
             <div className="flex justify-between items-center mb-6 border-b border-navy-700 pb-4">
@@ -196,7 +177,7 @@ export default function HeroSection({
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

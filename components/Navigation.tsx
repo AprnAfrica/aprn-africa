@@ -33,7 +33,7 @@ export default function Navigation() {
   }, []);
 
   return (
-    <motion.nav
+    <nav
       id="header"
       className="fixed w-full z-50"
       style={{
@@ -46,9 +46,6 @@ export default function Navigation() {
         boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.35)" : "none",
         transition: "background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease",
       }}
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.25, ease: "easeOut" as const }}
     >
       <div className="max-w-360 mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
 
@@ -225,6 +222,6 @@ export default function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }

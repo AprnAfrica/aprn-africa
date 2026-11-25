@@ -4,21 +4,11 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
 
 const inputClass =
   "w-full px-4 py-3 text-white placeholder-slate-600 text-sm transition-all duration-300 focus:outline-none rounded-t-sm"
   + " bg-navy-800/40 border-0 border-b border-slate-500/30 focus:border-b-2 focus:border-gold-500";
-
-const cardVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
-};
-const rowVariants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
-};
 
 function LoginForm() {
   const router = useRouter();
@@ -51,16 +41,10 @@ function LoginForm() {
   }
 
   return (
-    <motion.div
-      className="w-full max-w-md bg-navy-800 border border-white/5 p-8 sm:p-10 shadow-2xl"
-      initial={{ opacity: 0, y: 28 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-    >
-      <motion.div variants={cardVariants} initial="hidden" animate="show">
-
+    <div className="w-full max-w-md bg-navy-800 border border-white/5 p-8 sm:p-10 shadow-2xl">
+      <div>
         {/* Mobile logo */}
-        <motion.div variants={rowVariants} className="flex lg:hidden items-center justify-center mb-6 sm:mb-10">
+        <div className="flex lg:hidden items-center justify-center mb-6 sm:mb-10">
           <Image
             src="/images/logo.png"
             alt="African Pipeline Resource Network"
@@ -69,31 +53,31 @@ function LoginForm() {
             className="h-9 w-auto"
             priority
           />
-        </motion.div>
+        </div>
 
         {/* Title */}
-        <motion.div variants={rowVariants} className="text-center mb-6 sm:mb-10">
+        <div className="text-center mb-6 sm:mb-10">
           <h2 className="text-2xl font-semibold text-white mb-2">
             Welcome back{email.includes("@") ? `, ${email.split("@")[0].split(/[._-]/)[0].replace(/^\w/, (c) => c.toUpperCase())}` : ""}
           </h2>
           <p className="text-slate-400 text-sm">Sign in to your APRN member account</p>
-        </motion.div>
+        </div>
 
         {/* Alerts */}
         {searchParams.get("registered") && (
-          <motion.div variants={rowVariants} className="mb-6 px-4 py-3 border border-gold-500/30 bg-gold-500/10 text-sm text-gold-400 rounded-sm">
+          <div className="mb-6 px-4 py-3 border border-gold-500/30 bg-gold-500/10 text-sm text-gold-400 rounded-sm">
             Account created. Check your email to confirm, then sign in.
-          </motion.div>
+          </div>
         )}
         {searchParams.get("error") === "auth_failed" && (
-          <motion.div variants={rowVariants} className="mb-6 px-4 py-3 border border-red-500/30 bg-red-500/10 text-sm text-red-400 rounded-sm">
+          <div className="mb-6 px-4 py-3 border border-red-500/30 bg-red-500/10 text-sm text-red-400 rounded-sm">
             Authentication failed. Please try again.
-          </motion.div>
+          </div>
         )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <motion.div variants={rowVariants} className="space-y-2">
+          <div className="space-y-2">
             <label className="text-xs text-slate-400 uppercase tracking-wider font-medium">
               Email address
             </label>
@@ -105,9 +89,9 @@ function LoginForm() {
               placeholder="you@example.com"
               className={inputClass}
             />
-          </motion.div>
+          </div>
 
-          <motion.div variants={rowVariants} className="space-y-2">
+          <div className="space-y-2">
             <label className="text-xs text-slate-400 uppercase tracking-wider font-medium">
               Password
             </label>
@@ -128,9 +112,9 @@ function LoginForm() {
                 <i className={`fa-regular ${showPassword ? "fa-eye-slash" : "fa-eye"} text-sm`} />
               </button>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div variants={rowVariants} className="flex items-center justify-between flex-wrap gap-y-2 pt-2">
+          <div className="flex items-center justify-between flex-wrap gap-y-2 pt-2">
             <label className="flex items-center gap-2 cursor-pointer group">
               <div className="w-4 h-4 rounded border border-slate-500 group-hover:border-gold-500 flex items-center justify-center transition-colors">
                 <i className="fa-solid fa-check text-[10px] text-transparent group-hover:text-gold-500" />
@@ -140,63 +124,53 @@ function LoginForm() {
             <Link href="/forgot-password" className="text-sm text-slate-400 hover:text-gold-500 transition-colors">
               Forgot password?
             </Link>
-          </motion.div>
+          </div>
 
           {error && (
-            <motion.p
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-sm text-red-400 border border-red-500/30 bg-red-500/10 px-4 py-3 rounded-sm"
-            >
+            <p className="text-sm text-red-400 border border-red-500/30 bg-red-500/10 px-4 py-3 rounded-sm">
               {error}
-            </motion.p>
+            </p>
           )}
 
-          <motion.div variants={rowVariants}>
-            <motion.button
+          <div>
+            <button
               type="submit"
               disabled={loading}
-              whileHover={!loading ? { y: -2, boxShadow: "0 0 28px rgba(212,160,23,0.4)" } : {}}
-              whileTap={!loading ? { scale: 0.98 } : {}}
-              transition={{ duration: 0.15 }}
               className="w-full bg-gold-500 hover:bg-gold-400 text-navy-900 font-semibold py-4 mt-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? "Signing in…" : "Sign In"}
-            </motion.button>
-          </motion.div>
+            </button>
+          </div>
         </form>
 
         {/* Divider */}
-        <motion.div variants={rowVariants} className="flex items-center gap-4 my-8">
+        <div className="flex items-center gap-4 my-8">
           <div className="h-px bg-white/10 flex-1" />
           <span className="text-xs text-slate-500 uppercase tracking-wider">Or continue with</span>
           <div className="h-px bg-white/10 flex-1" />
-        </motion.div>
+        </div>
 
         {/* SSO buttons */}
-        <motion.div variants={rowVariants} className="space-y-3">
-          <motion.button
+        <div className="space-y-3">
+          <button
             onClick={handleGoogle}
-            whileHover={{ y: -1, backgroundColor: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.2)" }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.15 }}
-            className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-navy-900 border border-white/10 transition-colors text-sm font-medium text-white cursor-pointer"
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-navy-900 border border-white/10 hover:bg-white/5 hover:border-white/20 transition-colors text-sm font-medium text-white cursor-pointer"
           >
             <i className="fa-brands fa-google text-[#EA4335]" />
             Continue with Google
-          </motion.button>
-        </motion.div>
+          </button>
+        </div>
 
         {/* Footer link */}
-        <motion.p variants={rowVariants} className="mt-8 text-center text-sm text-slate-500">
+        <p className="mt-8 text-center text-sm text-slate-500">
           Don&apos;t have an account?{" "}
           <Link href="/register" className="text-gold-500 hover:text-gold-400 transition-colors font-medium">
             Join APRN
           </Link>
-        </motion.p>
+        </p>
 
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 

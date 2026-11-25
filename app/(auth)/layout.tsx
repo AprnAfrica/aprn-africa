@@ -1,23 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 const stats = [
   { value: "99.9%", label: "Network Uptime" },
   { value: "12.4k", label: "Active Nodes" },
   { value: "Secured", label: "End-to-End Encryption" },
 ];
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
-};
-
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
-};
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,12 +15,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       style={{ fontFamily: "var(--font-inter), sans-serif" }}
     >
       {/* -- Left Panel --------------------------------------- */}
-      <motion.div
-        className="hidden lg:flex lg:w-1/2 relative h-full bg-navy-900 overflow-hidden flex-col justify-between p-12"
-        initial={{ opacity: 0, x: -40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.65, ease: "easeOut" }}
-      >
+      <div className="hidden lg:flex lg:w-1/2 relative h-full bg-navy-900 overflow-hidden flex-col justify-between p-12">
         {/* Background image + overlays */}
         <div className="absolute inset-0 z-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -52,13 +36,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         {/* Header content */}
-        <motion.div
-          className="relative z-10"
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-        >
-          <motion.div variants={itemVariants} className="mb-8">
+        <div className="relative z-10">
+          <div className="mb-8">
             <Image
               src="/images/logo.png"
               alt="African Pipeline Resource Network"
@@ -67,12 +46,9 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               className="h-10 w-auto"
               priority
             />
-          </motion.div>
+          </div>
 
-          <motion.h1
-            variants={itemVariants}
-            className="text-5xl font-light leading-tight mb-6 mt-24 text-white"
-          >
+          <h1 className="text-5xl font-light leading-tight mb-6 mt-24 text-white">
             Secure Access to<br />
             <span
               className="font-bold bg-linear-to-r from-slate-100 to-slate-500 bg-clip-text text-transparent"
@@ -80,31 +56,23 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               Infrastructure Intelligence
             </span>
             <br />Systems.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={itemVariants}
-            className="text-slate-400 text-lg max-w-md border-l-2 border-gold-500 pl-4 py-1"
-          >
+          <p className="text-slate-400 text-lg max-w-md border-l-2 border-gold-500 pl-4 py-1">
             Enterprise-grade monitoring and resource allocation for the African Pipeline Resource Network.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Footer stats */}
-        <motion.div
-          className="relative z-10 flex gap-8 border-t border-white/10 pt-6"
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.7 } } }}
-          initial="hidden"
-          animate="show"
-        >
+        <div className="relative z-10 flex gap-8 border-t border-white/10 pt-6">
           {stats.map((s) => (
-            <motion.div key={s.label} variants={itemVariants}>
+            <div key={s.label}>
               <div className="text-3xl font-bold text-white mb-1">{s.value}</div>
               <div className="text-xs text-slate-500 uppercase tracking-wider">{s.label}</div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* -- Right Panel -------------------------------------- */}
       <div className="w-full lg:w-1/2 h-full flex flex-col justify-start lg:justify-center items-center bg-navy-900 px-5 py-10 sm:p-8 relative overflow-y-auto">

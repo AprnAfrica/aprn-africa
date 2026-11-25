@@ -93,12 +93,7 @@ export default function AboutPageClient({ persons }: Props) {
           }}
         />
 
-        <motion.div
-          className="z-10 w-full"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
+        <div className="z-10 w-full">
           <h1
             className="font-bold tracking-tighter mb-12 w-full wrap-break-word uppercase leading-[0.85]"
             style={{
@@ -108,7 +103,7 @@ export default function AboutPageClient({ persons }: Props) {
           >
             African Pipeline<br />Resource Network
           </h1>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 z-10 w-full items-end">
           {/* Main image */}
