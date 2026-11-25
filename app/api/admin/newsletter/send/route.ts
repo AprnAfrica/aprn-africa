@@ -5,6 +5,7 @@ import { Resend } from "resend";
 import { groq } from "next-sanity";
 import type { NewsletterIssue } from "@/lib/queries/newsletter";
 import { buildNewsletterHtml, buildNewsletterText } from "@/lib/newsletter-email";
+import { buildUnsubscribeUrl } from "@/lib/unsubscribe";
 
 function isAdmin(email: string | undefined): boolean {
   const allowed = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
@@ -67,8 +68,6 @@ export async function POST(req: NextRequest) {
   }
 
   const siteUrl    = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aprn-africa.org";
-  const html       = buildNewsletterHtml(issue, siteUrl);
-  const text       = buildNewsletterText(issue, siteUrl);
   const issueLabel = `Vol. ${issue.volume}, Issue ${String(issue.issueNumber).padStart(3, "0")}`;
   const subject    = testOnly
     ? `[TEST] ${issueLabel} — ${issue.title}`
@@ -79,14 +78,20 @@ export async function POST(req: NextRequest) {
   let sent = 0;
 
   for (let i = 0; i < recipients.length; i += batchSize) {
-    const batch = recipients.slice(i, i + batchSize).map((email) => ({
-      from: "APRN Intelligence Briefing <newsletter@aprn-africa.org>",
-      to:   [email],
-      subject,
-      html,
-      text,
-      headers: { "List-Unsubscribe": "<mailto:info@aprn-africa.org?subject=Unsubscribe>" },
-    }));
+    const batch = recipients.slice(i, i + batchSize).map((email) => {
+      const unsubUrl = buildUnsubscribeUrl(email, siteUrl);
+      return {
+        from: "APRN Intelligence Briefing <newsletter@aprn-africa.org>",
+        to:   [email],
+        subject,
+        html: buildNewsletterHtml(issue, siteUrl, unsubUrl),
+        text: buildNewsletterText(issue, siteUrl, unsubUrl),
+        headers: {
+          "List-Unsubscribe": `<${unsubUrl}>`,
+          "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        },
+      };
+    });
     const { error } = await resend.batch.send(batch);
     if (error) {
       console.error("[admin/newsletter/send] Resend batch error:", error);

@@ -73,7 +73,7 @@ function storyGrid(stories: NewsletterStory[]): string {
   return rows.join("");
 }
 
-export function buildNewsletterHtml(issue: NewsletterIssue, siteUrl: string): string {
+export function buildNewsletterHtml(issue: NewsletterIssue, siteUrl: string, unsubscribeUrl?: string): string {
   const issueLabel = `Vol. ${issue.volume}, Issue ${String(issue.issueNumber).padStart(3, "0")}`;
   const issueUrl   = `${siteUrl}/newsletter/${issue.slug}`;
   const dateLine   = new Date(issue.publishDate).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
@@ -183,7 +183,7 @@ export function buildNewsletterHtml(issue: NewsletterIssue, siteUrl: string): st
           <td style="background:#071B2A;padding:24px 32px 8px;border-top:1px solid #15324A;text-align:center;">
             <p style="margin:0 0 8px;font-size:11px;color:#64748b;">African Pipeline Resource Network &middot; <a href="${siteUrl}" style="color:#D4A017;text-decoration:none;">aprn-africa.org</a></p>
             <p style="margin:0 0 8px;font-size:10px;color:#475569;">You received this because you subscribed to the APRN Intelligence Briefing.</p>
-            <p style="margin:0;font-size:10px;color:#475569;"><a href="mailto:info@aprn-africa.org?subject=Unsubscribe" style="color:#64748b;text-decoration:underline;">Unsubscribe</a></p>
+            <p style="margin:0;font-size:10px;color:#475569;"><a href="${unsubscribeUrl ?? "mailto:info@aprn-africa.org?subject=Unsubscribe"}" style="color:#64748b;text-decoration:underline;">Unsubscribe</a></p>
           </td>
         </tr>
 
@@ -194,7 +194,7 @@ export function buildNewsletterHtml(issue: NewsletterIssue, siteUrl: string): st
 </html>`;
 }
 
-export function buildNewsletterText(issue: NewsletterIssue, siteUrl: string): string {
+export function buildNewsletterText(issue: NewsletterIssue, siteUrl: string, unsubscribeUrl?: string): string {
   const issueLabel = `Vol. ${issue.volume}, Issue ${String(issue.issueNumber).padStart(3, "0")}`;
   const issueUrl   = `${siteUrl}/newsletter/${issue.slug}`;
   const dateLine   = new Date(issue.publishDate).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
@@ -221,7 +221,9 @@ export function buildNewsletterText(issue: NewsletterIssue, siteUrl: string): st
     "— Lucy Okeke, Founder & Executive Director, APRN",
     "",
     `Read online: ${issueUrl}`,
-    "Unsubscribe: reply with subject \"Unsubscribe\" or email info@aprn-africa.org",
+    unsubscribeUrl
+      ? `Unsubscribe: ${unsubscribeUrl}`
+      : "Unsubscribe: reply with subject \"Unsubscribe\" or email info@aprn-africa.org",
   ]
     .join("\n")
     .replace(/\n{3,}/g, "\n\n");
