@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 const adminNav = [
   { href: "/admin",          icon: "fa-chart-line",          label: "Overview"  },
   { href: "/admin/members",   icon: "fa-users",               label: "Members"   },
+  { href: "/admin/talent",    icon: "fa-user-graduate",       label: "Talent"    },
   { href: "/admin/database",  icon: "fa-database",            label: "Database"  },
   { href: "/admin/outreach",     icon: "fa-paper-plane",         label: "Outreach"    },
   { href: "/admin/newsletter",   icon: "fa-envelope-open-text",  label: "Newsletter"  },

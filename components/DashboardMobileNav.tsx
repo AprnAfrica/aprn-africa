@@ -30,9 +30,10 @@ interface Props {
   initials: string;
   tier: string;
   displayName: string;
+  isAdmin?: boolean;
 }
 
-export default function DashboardMobileNav({ initials, tier, displayName }: Props) {
+export default function DashboardMobileNav({ initials, tier, displayName, isAdmin = false }: Props) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -195,6 +196,37 @@ export default function DashboardMobileNav({ initials, tier, displayName }: Prop
                     );
                   })}
                 </motion.ul>
+
+                {isAdmin && (
+                  <>
+                    <p className="px-3 mt-5 mb-2 text-[9px] font-bold tracking-[0.18em] text-slate-600 uppercase">
+                      Admin
+                    </p>
+                    <motion.ul
+                      initial="hidden"
+                      animate="visible"
+                      variants={{ visible: { transition: { staggerChildren: 0.055, delayChildren: 0.52 } } }}
+                      className="flex flex-col gap-0.5"
+                    >
+                      {[
+                        { href: "/admin", icon: "fa-shield-halved", label: "Admin Panel" },
+                        { href: "/studio", icon: "fa-pen-nib", label: "Sanity Studio" },
+                      ].map((item) => (
+                        <motion.li key={item.href} variants={itemVariants}>
+                          <Link
+                            href={item.href}
+                            className="group flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all text-slate-400 border border-transparent hover:text-white hover:bg-navy-800"
+                          >
+                            <span className="w-8 h-8 rounded-sm flex items-center justify-center shrink-0 transition-colors bg-navy-800 text-gold-500 group-hover:bg-navy-700">
+                              <i className={`fa-solid ${item.icon} text-xs`} />
+                            </span>
+                            <span className="flex-1">{item.label}</span>
+                          </Link>
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  </>
+                )}
 
               </nav>
 

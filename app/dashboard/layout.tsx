@@ -111,7 +111,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <div className="relative px-4 md:px-8 h-16 md:h-20 flex items-center gap-3 md:gap-6">
 
             {/* Mobile: hamburger — renders nothing on md+ */}
-            <DashboardMobileNav initials={initials} tier={tier} displayName={displayName} />
+            <DashboardMobileNav initials={initials} tier={tier} displayName={displayName} isAdmin={isAdmin(user.email)} />
 
             {/* Mobile: logo — absolutely centred so it never squishes other items */}
             <Link href="/dashboard" className="md:hidden absolute left-1/2 -translate-x-1/2 shrink-0">
