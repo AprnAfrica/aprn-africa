@@ -47,3 +47,22 @@ export const profileSettingsSchema = z.object({
 });
 
 export type ProfileSettingsInput = z.infer<typeof profileSettingsSchema>;
+
+// ─── Talent application ───────────────────────────────────────────
+
+export const talentApplicationSchema = z.object({
+  fullName:            z.string().min(2, "Full name is required").max(100),
+  email:               z.string().email("Enter a valid email address"),
+  phone:               z.string().min(7, "Enter a valid phone number").max(20),
+  university:          z.string().min(2, "University name is required").max(200),
+  discipline:          z.string().min(2, "Engineering discipline is required").max(100),
+  graduationYear:      z.coerce.number().int().min(2021).max(2026),
+  currentlyEmployed:   z.boolean(),
+  employer:            z.string().max(200).optional(),
+  whyPipelines:        z.string().min(50, "Minimum 50 characters").max(2000),
+  whyPipelinesMatter:  z.string().min(50, "Minimum 50 characters").max(2000),
+  whyAprn:             z.string().min(50, "Minimum 50 characters").max(2000),
+  contributionToAfrica:z.string().min(50, "Minimum 50 characters").max(2000),
+});
+
+export type TalentApplicationInput = z.infer<typeof talentApplicationSchema>;
