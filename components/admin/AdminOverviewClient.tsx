@@ -81,7 +81,7 @@ export default function AdminOverviewClient({
   const quickLinks = [
     { href: "/admin/members",  icon: "fa-users",               label: "Manage Members",    desc: "View, search, and update member tiers" },
     { href: "/admin/generate", icon: "fa-wand-magic-sparkles", label: "Generate Content",  desc: "AI-draft an editorial or research report" },
-    { href: "/admin/payments", icon: "fa-credit-card",         label: "Payments",          desc: "Review Paystack payment history" },
+    { href: "/admin/payments", icon: "fa-credit-card",         label: "Payments",          desc: "Review Flutterwave payment history" },
     { href: "/dashboard",      icon: "fa-arrow-left",          label: "Back to Dashboard", desc: "Return to your member dashboard" },
   ]
 

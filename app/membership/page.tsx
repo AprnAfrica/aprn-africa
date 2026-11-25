@@ -15,7 +15,7 @@ const plans = [
   { name: "Professional", naira: "₦50,000", usd: "~$30", tagline: "Practising pipeline engineers", note: "COREN registration preferred", color: "text-gold-500", featured: true },
   { name: "Associate", naira: "₦35,000", usd: "~$20", tagline: "Regulators, consultants & lawyers", note: "Non-engineers in the sector", color: "text-purple-400" },
   { name: "Corporate", naira: "₦500,000", usd: "~$300", tagline: "Companies & organisations", note: "Up to 5 staff passes", color: "text-copper-500" },
-  { name: "International", naira: "$100 USD", usd: "$100", tagline: "Africa diaspora & global allies", note: "PayPal / LemonSqueezy", color: "text-slate-300" },
+  { name: "International", naira: "$100 USD", usd: "$100", tagline: "Africa diaspora & global allies", note: "Card · Bank Transfer · Mobile Money", color: "text-slate-300" },
 ];
 
 const benefits = [
@@ -122,7 +122,7 @@ export default function MembershipPage() {
                 Membership Categories & Annual Fees
               </h2>
               <p className="text-slate-400 text-sm">
-                Nigeria (Naira): Paystack · Bank Transfer · Opay &nbsp;&nbsp;|&nbsp;&nbsp; International (USD): LemonSqueezy · PayPal
+                Card · Bank Transfer · Mobile Money · USSD — powered by Flutterwave
               </p>
             </div>
 

@@ -6,12 +6,13 @@ export const metadata = { title: "Payments | APRN Admin" };
 export interface PaymentRow {
   id: string;
   user_id: string;
-  amount_ngn: number;
+  amount: number;
   currency: string;
   status: string;
   payment_type: string;
-  paystack_ref: string;
-  paystack_txn_id: string | null;
+  payment_ref: string;
+  provider_txn_id: string | null;
+  provider: string;
   paid_at: string | null;
   created_at: string;
   full_name: string | null;
@@ -23,7 +24,7 @@ export default async function AdminPaymentsPage() {
 
   const { data: raw } = await admin
     .from("payments")
-    .select("id, user_id, amount_ngn, currency, status, payment_type, paystack_ref, paystack_txn_id, paid_at, created_at")
+    .select("id, user_id, amount, currency, status, payment_type, payment_ref, provider_txn_id, provider, paid_at, created_at")
     .order("created_at", { ascending: false })
     .limit(500);
 

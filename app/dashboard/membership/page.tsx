@@ -1,15 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import PaystackButton from "@/components/PaystackButton";
+import FlutterwaveButton from "@/components/FlutterwaveButton";
 
-// Amounts in kobo (1 NGN = 100 kobo)
-const TIER_KOBO: Record<string, number> = {
-  student:      1_000_000,
-  graduate:     2_500_000,
-  professional: 5_000_000,
-  associate:    3_500_000,
-  corporate:   50_000_000,
+const TIER_PRICES: Record<string, { amount: number; currency: string }> = {
+  student:       { amount: 10_000, currency: "NGN" },
+  graduate:      { amount: 25_000, currency: "NGN" },
+  professional:  { amount: 50_000, currency: "NGN" },
+  associate:     { amount: 35_000, currency: "NGN" },
+  corporate:     { amount: 500_000, currency: "NGN" },
+  international: { amount: 100, currency: "USD" },
 };
 
 export const metadata = { title: "Membership | APRN" };
@@ -25,7 +25,7 @@ const regularPlans = [
     color: "text-emerald-400",
     featured: false,
     features: ["Monthly APRN newsletter", "Monthly webinars", "WIMEE Africa programme", "Digital Africa Pipeline Report"],
-    paystack: true,
+    payable: true,
   },
   {
     key: "graduate",
@@ -37,7 +37,7 @@ const regularPlans = [
     color: "text-blue-400",
     featured: false,
     features: ["Monthly APRN newsletter", "Monthly webinars", "Industry database access", "Africa Pipeline Report", "10% EITEP training discount"],
-    paystack: true,
+    payable: true,
   },
   {
     key: "professional",
@@ -50,7 +50,7 @@ const regularPlans = [
     featured: true,
     badge: "Most Popular",
     features: ["Monthly APRN newsletter", "Monthly webinars", "Industry database access", "Africa Pipeline Report", "APLS summit (discounted)", "10% EITEP training discount"],
-    paystack: true,
+    payable: true,
   },
   {
     key: "associate",
@@ -74,7 +74,7 @@ const regularPlans = [
     color: "text-copper-500",
     featured: false,
     features: ["5 staff passes", "Logo on APRN website", "APLS summit (discounted)", "20% EITEP discount", "Industry database (all staff)", "Africa Pipeline Report (printed)"],
-    paystack: true,
+    payable: true,
   },
   {
     key: "international",
@@ -82,11 +82,11 @@ const regularPlans = [
     naira: "$100 USD",
     usd: "$100",
     tagline: "Africa diaspora & global allies",
-    note: "LemonSqueezy · PayPal",
+    note: "Card · Bank Transfer · Mobile Money",
     color: "text-slate-300",
     featured: false,
     features: ["Monthly APRN newsletter", "Monthly webinars", "Industry database access", "Africa Pipeline Report", "10% EITEP training discount"],
-    paystack: false,
+    payable: true,
   },
 ];
 
@@ -229,7 +229,7 @@ export default async function MembershipPage({
             Annual Membership
           </h3>
           <p className="text-sm text-slate-400 mt-1">
-            Renews annually. Nigeria — Paystack · Bank Transfer · Opay. &nbsp; International — LemonSqueezy · PayPal.
+            Renews annually. Card · Bank Transfer · Mobile Money · USSD — powered by Flutterwave.
           </p>
         </div>
 
@@ -277,26 +277,25 @@ export default async function MembershipPage({
                 ))}
               </ul>
 
-              {plan.paystack ? (
-                currentTier === plan.key ? (
-                  <div className="w-full py-2.5 text-center text-[10px] font-bold tracking-widest uppercase text-slate-500 border border-white/10">
-                    Current Plan
-                  </div>
-                ) : (
-                  <PaystackButton
-                    planKey={plan.key}
-                    planName={plan.name}
-                    amountKobo={TIER_KOBO[plan.key] ?? 0}
-                    email={email}
-                    featured={plan.featured}
-                  />
-                )
+              {currentTier === plan.key ? (
+                <div className="w-full py-2.5 text-center text-[10px] font-bold tracking-widest uppercase text-slate-500 border border-white/10">
+                  Current Plan
+                </div>
+              ) : plan.payable ? (
+                <FlutterwaveButton
+                  planKey={plan.key}
+                  planName={plan.name}
+                  amount={TIER_PRICES[plan.key]?.amount ?? 0}
+                  currency={TIER_PRICES[plan.key]?.currency ?? "NGN"}
+                  email={email}
+                  featured={plan.featured}
+                />
               ) : (
                 <a
-                  href="mailto:info@aprn-africa.org?subject=International Membership Enquiry"
+                  href="mailto:info@aprn-africa.org?subject=Membership Enquiry"
                   className="w-full py-2.5 text-center text-[10px] font-bold tracking-widest uppercase text-gold-500 border border-gold-500/30 hover:bg-gold-500/10 transition-colors"
                 >
-                  Enquire — International
+                  Enquire
                 </a>
               )}
             </div>
@@ -448,7 +447,7 @@ export default async function MembershipPage({
             For bank transfers, group registrations, or custom institutional arrangements contact us directly.
           </p>
           <p className="text-xs text-slate-500 mt-1">
-            Nigeria: Paystack · Bank Transfer · Opay &nbsp;|&nbsp; International: LemonSqueezy · PayPal
+            Card · Bank Transfer · Mobile Money · USSD — powered by Flutterwave
           </p>
         </div>
         <Link

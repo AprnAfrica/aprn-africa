@@ -18,8 +18,11 @@ const TIER_BADGE: Record<string, string> = {
   free:         "text-slate-500",
 };
 
-function fmtNGN(kobo: number): string {
-  return `₦${(kobo / 100).toLocaleString("en-NG", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+function fmtAmount(amount: number, currency: string): string {
+  if (currency === "USD") return `$${amount.toLocaleString("en-US")}`;
+  if (currency === "EUR") return `€${amount.toLocaleString("en-US")}`;
+  if (currency === "GBP") return `£${amount.toLocaleString("en-US")}`;
+  return `₦${amount.toLocaleString("en-NG")}`;
 }
 
 function fmtDate(iso: string): string {
@@ -47,7 +50,7 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
       list = list.filter(
         (p) =>
           p.full_name?.toLowerCase().includes(q) ||
-          p.paystack_ref.toLowerCase().includes(q) ||
+          p.payment_ref.toLowerCase().includes(q) ||
           p.payment_type.toLowerCase().includes(q) ||
           p.status.toLowerCase().includes(q)
       );
@@ -56,7 +59,7 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
   }, [payments, filter, search]);
 
   const totalRevenue = useMemo(
-    () => payments.filter((p) => p.status === "success").reduce((acc, p) => acc + p.amount_ngn, 0),
+    () => payments.filter((p) => p.status === "success").reduce((acc, p) => acc + p.amount, 0),
     [payments]
   );
   const successCount = useMemo(() => payments.filter((p) => p.status === "success").length, [payments]);
@@ -70,15 +73,16 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
   }
 
   function exportCsv() {
-    const headers = ["Member", "Tier", "Amount (NGN)", "Type", "Status", "Date", "Reference"];
+    const headers = ["Member", "Tier", "Amount", "Currency", "Type", "Status", "Date", "Reference"];
     const rows = filtered.map((p) => [
       p.full_name ?? "",
       p.membership_tier ?? "",
-      String(p.amount_ngn / 100),
+      String(p.amount),
+      p.currency,
       fmtType(p.payment_type),
       p.status,
       fmtDate(p.paid_at ?? p.created_at),
-      p.paystack_ref,
+      p.payment_ref,
     ]);
     const csv = [headers, ...rows]
       .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
@@ -104,17 +108,17 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
           Payments
         </h1>
         <p className="text-sm text-slate-400 mt-1">
-          Paystack transaction history for APRN memberships.
+          Flutterwave transaction history for APRN memberships.
         </p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Total Revenue",    value: fmtNGN(totalRevenue),      icon: "fa-naira-sign",   note: "successful only" },
-          { label: "Transactions",     value: String(payments.length),    icon: "fa-receipt",      note: "all time"        },
-          { label: "Successful",       value: String(successCount),       icon: "fa-circle-check", note: `${pendingCount} pending` },
-          { label: "Average Value",    value: fmtNGN(avgValue),           icon: "fa-chart-line",   note: "per success"     },
+          { label: "Total Revenue",    value: fmtAmount(totalRevenue, "NGN"), icon: "fa-naira-sign",   note: "successful only" },
+          { label: "Transactions",     value: String(payments.length),     icon: "fa-receipt",      note: "all time"        },
+          { label: "Successful",       value: String(successCount),        icon: "fa-circle-check", note: `${pendingCount} pending` },
+          { label: "Average Value",    value: fmtAmount(avgValue, "NGN"),  icon: "fa-chart-line",   note: "per success"     },
         ].map((s) => (
           <div key={s.label} className="bg-navy-800 border border-white/5 p-5">
             <div className="flex items-center gap-3 mb-3">
@@ -176,7 +180,7 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
           <i className="fa-solid fa-credit-card text-slate-700 text-3xl" />
           <p className="text-sm font-semibold text-slate-400">No transactions yet</p>
           <p className="text-xs text-slate-600 max-w-xs">
-            Payments will appear here once members complete checkout through Paystack.
+            Payments will appear here once members complete checkout through Flutterwave.
           </p>
         </div>
       ) : (
@@ -216,8 +220,7 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
                         )}
                       </td>
                       <td className="px-5 py-4 font-bold text-white whitespace-nowrap">
-                        {fmtNGN(p.amount_ngn)}
-                        <span className="text-slate-600 font-normal ml-1 text-[10px]">{p.currency.toUpperCase()}</span>
+                        {fmtAmount(p.amount, p.currency)}
                       </td>
                       <td className="px-5 py-4 text-slate-400 whitespace-nowrap">
                         {fmtType(p.payment_type)}
@@ -231,15 +234,15 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
                       <td className="px-5 py-4 text-slate-400 whitespace-nowrap">{dateStr}</td>
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-2">
-                          <code className="text-slate-400 text-[10px] font-mono truncate max-w-[100px]" title={p.paystack_ref}>
-                            {p.paystack_ref}
+                          <code className="text-slate-400 text-[10px] font-mono truncate max-w-[100px]" title={p.payment_ref}>
+                            {p.payment_ref}
                           </code>
                           <button
-                            onClick={() => copyRef(p.paystack_ref)}
+                            onClick={() => copyRef(p.payment_ref)}
                             className="text-slate-600 hover:text-gold-500 transition-colors shrink-0"
                             title="Copy reference"
                           >
-                            <i className={`fa-${copied === p.paystack_ref ? "solid fa-check text-emerald-400" : "regular fa-copy"} text-[10px]`} />
+                            <i className={`fa-${copied === p.payment_ref ? "solid fa-check text-emerald-400" : "regular fa-copy"} text-[10px]`} />
                           </button>
                         </div>
                       </td>
@@ -256,12 +259,12 @@ export default function AdminPaymentsClient({ payments }: { payments: PaymentRow
               Showing {filtered.length} of {payments.length} transactions
             </p>
             <a
-              href="https://dashboard.paystack.com"
+              href="https://dashboard.flutterwave.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[10px] text-slate-500 hover:text-gold-500 transition-colors flex items-center gap-1.5"
             >
-              Open Paystack Dashboard <i className="fa-solid fa-arrow-up-right-from-square text-[9px]" />
+              Open Flutterwave Dashboard <i className="fa-solid fa-arrow-up-right-from-square text-[9px]" />
             </a>
           </div>
         </div>

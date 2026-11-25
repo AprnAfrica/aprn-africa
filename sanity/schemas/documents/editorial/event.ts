@@ -202,7 +202,7 @@ export const event = defineType({
       title: 'Price (USD)',
       type: 'number',
       group: 'registration',
-      description: 'Leave blank if free. Paystack will convert to NGN.',
+      description: 'Leave blank if free. USD equivalent for international attendees.',
       hidden: ({ document }) => !!document?.isFree,
     }),
     defineField({

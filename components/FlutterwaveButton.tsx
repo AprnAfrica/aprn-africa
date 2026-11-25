@@ -32,13 +32,13 @@ type Status = "idle" | "loading-script" | "ready" | "paying" | "verifying" | "su
 
 export default function FlutterwaveButton({ planKey, planName, amount, currency, email, featured }: Props) {
   const [status, setStatus] = useState<Status>(() =>
-    typeof window !== "undefined" && window.FlutterwaveCheckout ? "ready" : "loading-script"
+    typeof window !== "undefined" && typeof window.FlutterwaveCheckout === "function" ? "ready" : "loading-script"
   );
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    if (window.FlutterwaveCheckout) return;
+    if (typeof window.FlutterwaveCheckout === "function") return;
     const script = document.createElement("script");
     script.src = "https://checkout.flutterwave.com/v3.js";
     script.async = true;

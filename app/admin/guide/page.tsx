@@ -258,15 +258,15 @@ export default function AdminGuidePage() {
           <H2 id="payments">4. Payments</H2>
           <p className="text-[10px] text-slate-500 mb-3">/admin/payments</p>
           <P>
-            A read-only log of every membership payment processed through Paystack. Records appear
+            A read-only log of every membership payment processed through Flutterwave. Records appear
             here automatically — nothing needs to be done manually when a member pays.
           </P>
 
           <H3>What each record shows</H3>
           <Bullets items={[
-            "Paystack reference number — unique transaction ID",
+            "Payment reference — unique transaction ID",
             "Member name and email",
-            "Amount paid in Naira",
+            "Amount paid (NGN, USD, or EUR)",
             "Membership tier the payment was for",
             "Status: Successful, Failed, or Pending",
             "Date and time of the transaction",

@@ -96,7 +96,7 @@ async function fetchSupabaseActivity(since: Date, _until: Date) {
 
   const [members, payments, operators, contractors, engineers, regulators, sources] = await Promise.all([
     admin.from("profiles").select("full_name, membership_tier, created_at").gte("created_at", iso),
-    admin.from("payments").select("amount_ngn, payment_type, paid_at").gte("paid_at", iso),
+    admin.from("payments").select("amount, currency, payment_type, paid_at").gte("paid_at", iso),
     admin.from("pipeline_operators").select("company_name, created_at").gte("created_at", iso),
     admin.from("contractors_epc").select("company_name, created_at").gte("created_at", iso),
     admin.from("pipeline_engineers").select("full_name, created_at").gte("created_at", iso),
@@ -104,7 +104,7 @@ async function fetchSupabaseActivity(since: Date, _until: Date) {
     admin.from("research_sources").select("title, category, created_at").gte("created_at", iso),
   ]);
 
-  const totalRevenue = (payments.data ?? []).reduce((sum, p) => sum + (p.amount_ngn ?? 0), 0);
+  const totalRevenue = (payments.data ?? []).reduce((sum, p) => sum + (p.amount ?? 0), 0);
 
   return {
     newMembers: members.data ?? [],
