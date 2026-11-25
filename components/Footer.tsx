@@ -50,7 +50,7 @@ function NavList({ items }: { items: FooterLink[] }) {
 export default function Footer({ siteSettings }: FooterProps) {
   const email       = siteSettings?.contactEmail    ?? "info@aprn-africa.org";
   const description = siteSettings?.footerDescription ?? "Building the knowledge infrastructure for Africa\u2019s energy transition through rigorous research and elite training.";
-  const linkedin    = siteSettings?.socialLinks?.linkedin ?? "https://www.linkedin.com/company/african-pipeline-resource-network/posts/";
+  const linkedin    = siteSettings?.socialLinks?.linkedin ?? "https://www.linkedin.com/company/african-pipeline-resource-network";
 
   const initiatives  = siteSettings?.footerInitiatives?.length  ? siteSettings.footerInitiatives  : DEFAULT_INITIATIVES;
   const organisation = siteSettings?.footerOrganisation?.length ? siteSettings.footerOrganisation : DEFAULT_ORGANISATION;
