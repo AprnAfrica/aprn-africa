@@ -214,18 +214,33 @@ Rules: Do NOT add a "Coming Up Next" section. Do NOT add a sign-off. Do NOT ment
 
 Generate the full ${periodNoun}ly report now. Include every commit, every content item, every member.`;
 
-  const message = await anthropic.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: isMonthly ? 4096 : 2048,
-    system: systemPrompt,
-    messages: [{ role: "user", content: userPrompt }],
+  const encoder = new TextEncoder();
+  const readable = new ReadableStream({
+    async start(controller) {
+      try {
+        controller.enqueue(encoder.encode(JSON.stringify({ label, rawData }) + "\n\n---STREAM---\n\n"));
+
+        const stream = anthropic.messages.stream({
+          model: "claude-sonnet-4-6",
+          max_tokens: isMonthly ? 4096 : 2048,
+          system: systemPrompt,
+          messages: [{ role: "user", content: userPrompt }],
+        });
+
+        for await (const event of stream) {
+          if (event.type === "content_block_delta" && "delta" in event && event.delta.type === "text_delta") {
+            controller.enqueue(encoder.encode((event.delta as { type: "text_delta"; text: string }).text));
+          }
+        }
+        controller.close();
+      } catch (err) {
+        controller.enqueue(encoder.encode(`\n\n---ERROR---\n\n${err instanceof Error ? err.message : "Unknown error"}`));
+        controller.close();
+      }
+    },
   });
 
-  const firstBlock = message.content[0];
-  if (!firstBlock || firstBlock.type !== "text") {
-    return NextResponse.json({ error: "Unexpected model response format" }, { status: 500 });
-  }
-  const content = (firstBlock as { type: "text"; text: string }).text;
-
-  return NextResponse.json({ content, rawData, label });
+  return new Response(readable, {
+    headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-cache" },
+  });
 }

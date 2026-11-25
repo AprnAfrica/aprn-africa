@@ -103,13 +103,48 @@ export default function WeeklyReportClient({ pastReports }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      const text = await res.text();
-      if (!text) throw new Error("Empty response — the server may have timed out. Try again.");
-      const json = JSON.parse(text);
-      if (!res.ok) throw new Error(json.error ?? "Failed to generate");
-      setContent(json.content);
-      setPeriodLabel(json.label);
-      setRawData(json.rawData);
+
+      if (!res.ok) {
+        const text = await res.text();
+        let msg = "Failed to generate";
+        try { msg = JSON.parse(text).error ?? msg; } catch {}
+        throw new Error(msg);
+      }
+
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error("No response stream");
+
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let metaParsed = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        if (!metaParsed) {
+          const sep = buffer.indexOf("\n\n---STREAM---\n\n");
+          if (sep !== -1) {
+            const metaJson = buffer.slice(0, sep);
+            const meta = JSON.parse(metaJson);
+            setPeriodLabel(meta.label);
+            setRawData(meta.rawData);
+            buffer = buffer.slice(sep + "\n\n---STREAM---\n\n".length);
+            metaParsed = true;
+          }
+        }
+
+        if (metaParsed) {
+          const errSep = buffer.indexOf("\n\n---ERROR---\n\n");
+          if (errSep !== -1) {
+            throw new Error(buffer.slice(errSep + "\n\n---ERROR---\n\n".length));
+          }
+          setContent(buffer);
+        }
+      }
+
+      if (!metaParsed) throw new Error("Empty response — the server may have timed out. Try again.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {
