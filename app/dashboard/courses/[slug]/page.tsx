@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sanityFetch } from "@/lib/sanity/fetch";
 import { PortableTextRenderer } from "@/components/PortableTextRenderer";
+import EnrollButton from "@/components/EnrollButton";
 import {
   TRAINING_PROGRAM_BY_SLUG_QUERY,
   TRAINING_PROGRAM_SLUGS_QUERY,
@@ -152,12 +153,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                 Apply Now
               </a>
             ) : (
-              <Link
-                href="/dashboard/membership"
-                className="w-full py-3 text-center text-xs font-bold tracking-widest uppercase text-navy-900 bg-gold-500 hover:bg-gold-400 transition-colors block"
-              >
-                Upgrade to Enrol
-              </Link>
+              <EnrollButton programSlug={slug} />
             )}
             {program.applicationDeadline && (
               <p className="text-[10px] text-slate-500 text-center">

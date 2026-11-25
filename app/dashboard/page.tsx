@@ -35,16 +35,18 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const [profileRes, savedCountRes, recentResearch] = await Promise.all([
+  const [profileRes, savedCountRes, enrollCountRes, recentResearch] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", user.id).single(),
     supabase.from("saved_items").select("id", { count: "exact", head: true }).eq("user_id", user.id),
+    supabase.from("course_enrollments").select("id", { count: "exact", head: true }).eq("user_id", user.id).eq("status", "enrolled"),
     sanityFetch<DashboardOverviewResearchCard[]>(
       DASHBOARD_OVERVIEW_RESEARCH_QUERY, {}, ["researchReport"]
     ).catch(() => [] as DashboardOverviewResearchCard[]),
   ]);
 
-  const profile   = profileRes.data;
-  const savedCount = savedCountRes.count ?? 0;
+  const profile     = profileRes.data;
+  const savedCount  = savedCountRes.count ?? 0;
+  const enrollCount = enrollCountRes.count ?? 0;
   const firstName = profile?.full_name?.split(" ")[0] ?? "there";
   const tier      = profile?.membership_tier ?? "free";
   const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
@@ -88,7 +90,7 @@ export default async function DashboardPage() {
         {/* Stat cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: "Courses Enrolled", value: "0",       sub: "Active" },
+            { label: "Courses Enrolled", value: String(enrollCount), sub: enrollCount === 1 ? "course" : "courses" },
             { label: "Research Saved",   value: String(savedCount), sub: savedCount === 1 ? "article" : "articles" },
             { label: "Network",          value: "—",        sub: "Connections" },
             { label: "Membership",       value: tierLabel,  sub: "current plan", bar: true },
