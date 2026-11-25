@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { after } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { talentApplicationSchema } from "@/lib/validation";
+import { Resend } from "resend";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
@@ -108,7 +110,7 @@ export async function POST(req: Request) {
         university:             parsed.data.university,
         discipline:             parsed.data.discipline,
         graduation_year:        parsed.data.graduationYear,
-        degree_class:           "first_class",
+        degree_class:           "not_specified",
         currently_employed:     parsed.data.currentlyEmployed,
         employer:               parsed.data.employer ?? null,
         degree_cert_path:       degreePath,
@@ -128,11 +130,76 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Failed to submit application" }, { status: 500 });
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       applicationId: data.id,
       submittedAt: data.submitted_at,
     });
+
+    after(async () => {
+      const resendKey = process.env.RESEND_API_KEY;
+      if (!resendKey) {
+        console.log("[talent] Resend not configured — skipping emails");
+        return;
+      }
+      const resend = new Resend(resendKey);
+      const applicantName = parsed.data.fullName;
+      const applicantEmail = parsed.data.email;
+
+      const confirmationPromise = resend.emails.send({
+        from: "APRN Africa <newsletter@aprn-africa.org>",
+        to: [applicantEmail],
+        subject: "Application Received — APRN Pipeline Training Programme",
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#071B2A;color:#ffffff;padding:40px;">
+            <div style="border-bottom:3px solid #D4A017;padding-bottom:20px;margin-bottom:24px;">
+              <h2 style="margin:0;font-size:22px;color:#D4A017;">Application Received</h2>
+            </div>
+            <p style="font-size:15px;line-height:1.7;">Dear ${applicantName},</p>
+            <p style="font-size:15px;line-height:1.7;">Thank you for applying to the APRN Pipeline Training Programme. We have received your application and supporting documents.</p>
+            <div style="margin:24px 0;padding:20px;background:#0D2436;border-left:3px solid #D4A017;">
+              <p style="margin:0 0 8px;font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">Application Reference</p>
+              <p style="margin:0;font-size:14px;font-family:monospace;color:#D4A017;">${data.id}</p>
+            </div>
+            <p style="font-size:15px;line-height:1.7;">Our team will review your submission and contact you at this email address with next steps. Please allow up to two weeks for a response.</p>
+            <p style="font-size:15px;line-height:1.7;">If you have any questions, contact us at <a href="mailto:info@aprn-africa.org" style="color:#D4A017;">info@aprn-africa.org</a>.</p>
+            <p style="margin-top:32px;font-size:14px;color:#94a3b8;">The African Pipeline Resource Network</p>
+          </div>
+        `,
+      });
+
+      const adminPromise = resend.emails.send({
+        from: "APRN Talent Portal <newsletter@aprn-africa.org>",
+        to: ["info@aprn-africa.org"],
+        subject: `[New Application] ${applicantName} — ${parsed.data.university}`,
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#071B2A;color:#ffffff;padding:40px;">
+            <div style="border-bottom:3px solid #D4A017;padding-bottom:20px;margin-bottom:24px;">
+              <h2 style="margin:0;font-size:22px;color:#D4A017;">New Talent Application</h2>
+            </div>
+            <table style="width:100%;border-collapse:collapse;">
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;width:140px;">Name</td><td style="padding:8px 0;font-size:14px;">${applicantName}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Email</td><td style="padding:8px 0;font-size:14px;"><a href="mailto:${applicantEmail}" style="color:#D4A017;">${applicantEmail}</a></td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Phone</td><td style="padding:8px 0;font-size:14px;">${parsed.data.phone}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">University</td><td style="padding:8px 0;font-size:14px;">${parsed.data.university}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Discipline</td><td style="padding:8px 0;font-size:14px;">${parsed.data.discipline}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Graduation</td><td style="padding:8px 0;font-size:14px;">${parsed.data.graduationYear}</td></tr>
+              <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Employed</td><td style="padding:8px 0;font-size:14px;">${parsed.data.currentlyEmployed ? `Yes — ${parsed.data.employer ?? ""}` : "No"}</td></tr>
+            </table>
+            <div style="margin-top:24px;padding:16px;background:#0D2436;text-align:center;">
+              <a href="https://aprn-africa.org/admin/talent" style="color:#D4A017;font-size:14px;font-weight:bold;text-decoration:none;">Review in Admin Panel &rarr;</a>
+            </div>
+          </div>
+        `,
+      });
+
+      const results = await Promise.allSettled([confirmationPromise, adminPromise]);
+      for (const r of results) {
+        if (r.status === "rejected") console.error("[talent] Email send failed:", r.reason);
+      }
+    });
+
+    return response;
   } catch (err) {
     console.error("Talent application error:", err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
