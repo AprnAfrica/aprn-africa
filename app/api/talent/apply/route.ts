@@ -2,9 +2,6 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { talentApplicationSchema } from "@/lib/validation";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- table not in generated types until migration is pushed and types regenerated
-type AnyClient = ReturnType<typeof createAdminClient> & { from: (table: string) => any };
-
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
 
@@ -63,7 +60,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: fileErrors.join("; ") }, { status: 400 });
     }
 
-    const supabase = createAdminClient() as AnyClient;
+    const supabase = createAdminClient();
 
     // check for duplicate email
     const { data: existing } = await supabase
