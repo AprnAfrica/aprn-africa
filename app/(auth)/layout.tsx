@@ -37,7 +37,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
         {/* Header content */}
         <div className="relative z-10">
-          <div className="mb-8">
+          <div className="mb-8 anim-reveal-in">
             <Image
               src="/images/logo.png"
               alt="African Pipeline Resource Network"
@@ -48,7 +48,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             />
           </div>
 
-          <h1 className="text-5xl font-light leading-tight mb-6 mt-24 text-white">
+          <h1 className="text-5xl font-light leading-tight mb-6 mt-24 text-white anim-reveal-up anim-d1">
             Secure Access to<br />
             <span
               className="font-bold bg-linear-to-r from-slate-100 to-slate-500 bg-clip-text text-transparent"
@@ -58,13 +58,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <br />Systems.
           </h1>
 
-          <p className="text-slate-400 text-lg max-w-md border-l-2 border-gold-500 pl-4 py-1">
+          <p className="text-slate-400 text-lg max-w-md border-l-2 border-gold-500 pl-4 py-1 anim-reveal-up anim-d2">
             Enterprise-grade monitoring and resource allocation for the African Pipeline Resource Network.
           </p>
         </div>
 
         {/* Footer stats */}
-        <div className="relative z-10 flex gap-8 border-t border-white/10 pt-6">
+        <div className="relative z-10 flex gap-8 border-t border-white/10 pt-6 anim-reveal-up anim-d3">
           {stats.map((s) => (
             <div key={s.label}>
               <div className="text-3xl font-bold text-white mb-1">{s.value}</div>

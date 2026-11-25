@@ -67,7 +67,7 @@ export default function NetworkPageClient({
     <div className="flex flex-col gap-8 max-w-275">
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6 anim-reveal-up">
         <div>
           <h2
             className="text-2xl sm:text-3xl font-bold text-white"
@@ -94,7 +94,7 @@ export default function NetworkPageClient({
       </div>
 
       {/* Stats strip */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 anim-reveal-up anim-d1">
         {[
           { label: "Members",       value: totalCount > 0 ? `${totalCount}+` : "0", icon: "fa-users" },
           { label: "Countries",     value: countries > 0 ? String(countries) : "—",  icon: "fa-globe-africa" },
@@ -118,7 +118,7 @@ export default function NetworkPageClient({
       </div>
 
       {/* Membership gate */}
-      <div className="bg-gold-500/5 border border-gold-500/20 p-5 flex items-start gap-4">
+      <div className="bg-gold-500/5 border border-gold-500/20 p-5 flex items-start gap-4 anim-reveal-up anim-d2">
         <i className="fa-solid fa-lock text-gold-500 text-sm mt-0.5 shrink-0" />
         <div>
           <p className="text-sm font-semibold text-white mb-1">Direct messaging requires Professional membership</p>
@@ -166,7 +166,7 @@ export default function NetworkPageClient({
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 anim-reveal-up anim-d3">
           {filtered.map((member) => (
             <div
               key={member.id}

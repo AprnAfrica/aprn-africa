@@ -38,7 +38,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="w-full max-w-md bg-navy-800 border border-white/5 p-8 sm:p-10 shadow-2xl">
+    <div className="w-full max-w-md bg-navy-800 border border-white/5 p-8 sm:p-10 shadow-2xl anim-reveal-scale anim-d1">
       <div>
         {/* Mobile logo */}
         <div className="flex lg:hidden items-center justify-center mb-6 sm:mb-10">

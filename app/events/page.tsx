@@ -201,18 +201,18 @@ export default async function EventsPage() {
           }}
         />
         <div className="relative max-w-360 mx-auto px-6 md:px-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-gold-500/30 bg-gold-500/5 mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 border border-gold-500/30 bg-gold-500/5 mb-6 anim-reveal-up">
             <i className="fa-solid fa-calendar-days text-gold-500 text-xs" />
             <span className="text-xs font-bold tracking-widest text-gold-500 uppercase">Events & Conferences</span>
           </div>
           <h1
-            className="text-5xl md:text-6xl font-bold text-white mb-5 leading-tight"
+            className="text-5xl md:text-6xl font-bold text-white mb-5 leading-tight anim-reveal-up anim-d1"
             style={{ fontFamily: "var(--font-playfair), serif" }}
           >
             Where Africa&apos;s Pipeline<br />
             <span className="text-gold-500">Leaders Convene</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl leading-relaxed border-l-2 border-gold-500/50 pl-5">
+          <p className="text-lg text-slate-400 max-w-2xl leading-relaxed border-l-2 border-gold-500/50 pl-5 anim-reveal-up anim-d2">
             Technical conferences, policy dialogues, and hands-on workshops bringing together
             engineers, regulators, and investors from across the continent.
           </p>

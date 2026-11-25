@@ -36,7 +36,7 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
     <div className="flex flex-col gap-8 max-w-275">
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6 anim-reveal-up">
         <div>
           <h2
             className="text-2xl sm:text-3xl font-bold text-white"
@@ -63,7 +63,7 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
       </div>
 
       {/* Enrolment banner — static until enrolment tracking is built */}
-      <div className="bg-navy-800 border border-white/5 border-dashed p-5 sm:p-8 flex flex-col sm:flex-row items-center gap-5 sm:gap-6">
+      <div className="bg-navy-800 border border-white/5 border-dashed p-5 sm:p-8 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 anim-reveal-up anim-d1">
         <div className="w-12 h-12 bg-navy-900 border border-white/5 flex items-center justify-center shrink-0">
           <i className="fa-solid fa-graduation-cap text-slate-600 text-lg" />
         </div>
@@ -110,7 +110,7 @@ export default function CoursesPageClient({ courses }: { courses: TrainingProgra
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 anim-reveal-up anim-d2">
           {filtered.map((course) => {
             const levelStyle = LEVEL_STYLE[course.level] ?? "text-slate-400 border-white/10";
             return (

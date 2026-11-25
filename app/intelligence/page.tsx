@@ -37,12 +37,12 @@ export default async function IntelligencePage() {
       {/* Hero */}
       <section className="pt-28 pb-12 border-b border-white/5">
         <div className="max-w-360 mx-auto px-4 sm:px-6 md:px-10">
-          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "2.5px", color: "#D4A017", textTransform: "uppercase", marginBottom: 14 }}>
+          <p className="anim-reveal-up" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "2.5px", color: "#D4A017", textTransform: "uppercase", marginBottom: 14 }}>
             APRN · Intelligence Platform
           </p>
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 40, flexWrap: "wrap" }}>
             <div style={{ maxWidth: 600 }}>
-              <h1 style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 800, fontSize: "clamp(1.75rem, 5vw, 3.375rem)", lineHeight: 1, letterSpacing: "-.5px", color: "#e8edf1", marginBottom: 20 }}>
+              <h1 className="anim-reveal-up anim-d1" style={{ fontFamily: "var(--font-playfair), serif", fontWeight: 800, fontSize: "clamp(1.75rem, 5vw, 3.375rem)", lineHeight: 1, letterSpacing: "-.5px", color: "#e8edf1", marginBottom: 20 }}>
                 African Energy Intelligence
               </h1>
               <p style={{ fontSize: 15, color: "#9fb0bd", lineHeight: 1.7 }}>

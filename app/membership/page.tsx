@@ -44,7 +44,7 @@ export default function MembershipPage() {
             }}
           />
           <div className="max-w-360 mx-auto px-6 md:px-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-gold-500/30 bg-gold-500/8 mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 border border-gold-500/30 bg-gold-500/8 mb-8 anim-reveal-up">
               <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse" />
               <span className="text-[11px] font-bold text-gold-500 uppercase tracking-widest">
                 Founding Window Open · June 2026 – June 2027
@@ -52,20 +52,20 @@ export default function MembershipPage() {
             </div>
 
             <h1
-              className="text-4xl sm:text-5xl md:text-7xl font-bold leading-[1.1] mb-6 max-w-4xl"
+              className="text-4xl sm:text-5xl md:text-7xl font-bold leading-[1.1] mb-6 max-w-4xl anim-reveal-up anim-d1"
               style={{ fontFamily: "var(--font-playfair), serif" }}
             >
               Join Africa&apos;s Pipeline<br />
               <span className="text-gold-500">Resource Network</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-400 font-light max-w-2xl mb-10 leading-relaxed border-l-2 border-gold-500/50 pl-6">
+            <p className="text-lg md:text-xl text-slate-400 font-light max-w-2xl mb-10 leading-relaxed border-l-2 border-gold-500/50 pl-6 anim-reveal-up anim-d2">
               APRN is Africa&apos;s first dedicated pipeline research, training, and advocacy network.
               As a founding member, you are not just joining an organisation — you are helping to
               build the institution that will shape Africa&apos;s pipeline engineering landscape for decades.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 anim-reveal-up anim-d3">
               <a
                 href="#plans"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold tracking-wide transition-all shadow-[0_0_20px_rgba(212,160,23,0.25)]"

@@ -120,25 +120,25 @@ export default async function PartnershipsPage() {
 
           <div className="relative z-10 max-w-360 mx-auto px-6 lg:px-12 w-full grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 py-20">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-gold-500/30 mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-gold-500/30 mb-6 anim-reveal-up">
                 <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse" />
                 <span className="text-xs font-semibold tracking-widest uppercase text-gold-500">
                   Continental Infrastructure Alliance
                 </span>
               </div>
 
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 text-white">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 text-white anim-reveal-up anim-d1">
                 Building Africa&apos;s <br />
                 <span className="text-gradient">Pipeline Ecosystem</span> <br />
                 Together
               </h1>
 
-              <p className="text-lg text-slate-300 max-w-2xl leading-relaxed border-l-2 border-gold-500 pl-6 mb-10">
+              <p className="text-lg text-slate-300 max-w-2xl leading-relaxed border-l-2 border-gold-500 pl-6 mb-10 anim-reveal-up anim-d2">
                 APRN unites regulators, operators, and academic institutions to standardise engineering
                 excellence, ensure integrity, and drive sustainable energy transport across the continent.
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 anim-reveal-up anim-d3">
                 <a
                   href="#ecosystem"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold tracking-wide transition-all rounded-sm shadow-[0_0_20px_rgba(212,160,23,0.4)] uppercase text-sm"

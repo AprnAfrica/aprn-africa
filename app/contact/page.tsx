@@ -85,17 +85,17 @@ export default function ContactPage() {
           </div>
 
           <div className="relative z-10 max-w-5xl mx-auto w-full">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-gold-500/30 bg-gold-500/10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-gold-500/30 bg-gold-500/10 anim-reveal-up">
               <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse" />
               <span className="text-xs font-semibold text-gold-500 uppercase tracking-widest">Institutional Access</span>
             </div>
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight anim-reveal-up anim-d1"
               style={{ fontFamily: "var(--font-oswald), sans-serif" }}
             >
               Connect With <span className="text-gold-500">APRN</span>
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl leading-relaxed">
+            <p className="text-xl text-slate-400 max-w-2xl leading-relaxed anim-reveal-up anim-d2">
               A strategic engineering platform and globally credible collaboration network for Africa&apos;s infrastructure future.
             </p>
           </div>

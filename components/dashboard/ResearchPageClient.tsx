@@ -102,7 +102,7 @@ export default function ResearchPageClient({
     <div className="flex flex-col gap-8 max-w-275">
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6 anim-reveal-up">
         <div>
           <h2
             className="text-2xl sm:text-3xl font-bold text-white"
@@ -129,7 +129,7 @@ export default function ResearchPageClient({
       </div>
 
       {/* Stats strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 anim-reveal-up anim-d1">
         {[
           { label: "Papers Available", value: papers.length > 0 ? `${papers.length}+` : "0", icon: "fa-file-lines" },
           { label: "New This Month",   value: String(newCount),   icon: "fa-sparkles" },
@@ -155,7 +155,7 @@ export default function ResearchPageClient({
 
       {/* Membership gate — only shown when there are papers */}
       {papers.length > 0 && (
-        <div className="bg-gold-500/5 border border-gold-500/20 p-5 flex items-start gap-4">
+        <div className="bg-gold-500/5 border border-gold-500/20 p-5 flex items-start gap-4 anim-reveal-up anim-d2">
           <i className="fa-solid fa-lock text-gold-500 text-sm mt-0.5 shrink-0" />
           <div className="flex-1">
             <p className="text-sm font-semibold text-white mb-1">Full archive requires Professional membership</p>
@@ -211,7 +211,7 @@ export default function ResearchPageClient({
           </button>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 anim-reveal-up anim-d3">
           {filtered.map((paper) => {
             const isSaved = paper._id in localSaved;
             const primaryTopic = paper.topics?.[0]?.name ?? paper.reportType;

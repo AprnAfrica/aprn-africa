@@ -88,3 +88,45 @@ body {
   -webkit-text-fill-color: transparent;
   background-image: linear-gradient(to right, #D4A017, #C97A2B);
 }
+
+/* Entry animations — CSS-only, start on first paint (no JS dependency) */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(22px); }
+}
+@keyframes reveal-down {
+  from { opacity: 0; transform: translateY(-16px); }
+}
+@keyframes reveal-in {
+  from { opacity: 0; }
+}
+@keyframes reveal-scale {
+  from { opacity: 0; transform: scale(0.96); }
+}
+@keyframes reveal-left {
+  from { opacity: 0; transform: translateX(28px); }
+}
+
+.anim-reveal-up    { animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-reveal-down  { animation: reveal-down 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-reveal-in    { animation: reveal-in 0.7s ease-out both; }
+.anim-reveal-scale { animation: reveal-scale 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-reveal-left  { animation: reveal-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+.anim-d1 { animation-delay: 80ms; }
+.anim-d2 { animation-delay: 160ms; }
+.anim-d3 { animation-delay: 240ms; }
+.anim-d4 { animation-delay: 320ms; }
+.anim-d5 { animation-delay: 400ms; }
+.anim-d6 { animation-delay: 480ms; }
+.anim-d7 { animation-delay: 560ms; }
+.anim-d8 { animation-delay: 640ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-reveal-up,
+  .anim-reveal-down,
+  .anim-reveal-in,
+  .anim-reveal-scale,
+  .anim-reveal-left {
+    animation: none;
+  }
+}

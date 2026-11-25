@@ -158,13 +158,13 @@ export default async function ResearchPage() {
           </div>
 
           <div className="relative z-10 max-w-360 mx-auto w-full px-6 lg:px-12 flex flex-col items-center text-center">
-            <span className="text-gold-500 tracking-[0.3em] uppercase text-sm mb-6 border-b border-gold-500/30 pb-2"
+            <span className="text-gold-500 tracking-[0.3em] uppercase text-sm mb-6 border-b border-gold-500/30 pb-2 anim-reveal-up"
               style={{ fontFamily: "var(--font-inter), sans-serif" }}>
               Institutional Intelligence
             </span>
 
             <h1
-              className="font-bold leading-[0.85] tracking-tighter text-slate-100 uppercase mb-8 max-w-6xl"
+              className="font-bold leading-[0.85] tracking-tighter text-slate-100 uppercase mb-8 max-w-6xl anim-reveal-up anim-d1"
               style={{
                 fontFamily: "var(--font-oswald), sans-serif",
                 fontSize: "clamp(3rem, 9vw, 110px)",
@@ -175,7 +175,7 @@ export default async function ResearchPage() {
             </h1>
 
             <p
-              className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto leading-relaxed mb-12 italic"
+              className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto leading-relaxed mb-12 italic anim-reveal-up anim-d2"
               style={{ fontFamily: "var(--font-playfair), serif" }}
             >
               Strategic engineering research, policy frameworks, and infrastructure data driving the

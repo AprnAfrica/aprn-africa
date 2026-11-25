@@ -104,19 +104,19 @@ export default async function TrainingPage() {
 
           <div className="max-w-360 mx-auto px-6 lg:px-12 relative z-20 grid lg:grid-cols-12 gap-12 items-center w-full">
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-4 py-2 border border-gold-500/30 bg-gold-500/10 mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 border border-gold-500/30 bg-gold-500/10 mb-6 anim-reveal-up">
                 <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse" />
                 <span className="text-xs font-semibold text-gold-500 uppercase tracking-widest">
                   APRN Professional Academy
                 </span>
               </div>
 
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 text-white">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 text-white anim-reveal-up anim-d1">
                 Developing Africa&apos;s <br />
                 <span className="text-gradient">Pipeline Workforce</span>
               </h1>
 
-              <p className="text-lg lg:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed">
+              <p className="text-lg lg:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed anim-reveal-up anim-d2">
                 Building the next generation of technical leaders, integrity engineers, and
                 infrastructure specialists to power the continent&apos;s energy future.
               </p>

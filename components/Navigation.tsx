@@ -35,7 +35,7 @@ export default function Navigation() {
   return (
     <nav
       id="header"
-      className="fixed w-full z-50"
+      className="fixed w-full z-50 anim-reveal-down"
       style={{
         background: scrolled ? "rgba(7, 27, 42, 0.97)" : "rgba(7, 27, 42, 0.55)",
         backdropFilter: "blur(16px)",

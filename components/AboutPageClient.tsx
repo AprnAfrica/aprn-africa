@@ -93,7 +93,7 @@ export default function AboutPageClient({ persons }: Props) {
           }}
         />
 
-        <div className="z-10 w-full">
+        <div className="z-10 w-full anim-reveal-up">
           <h1
             className="font-bold tracking-tighter mb-12 w-full wrap-break-word uppercase leading-[0.85]"
             style={{
@@ -105,7 +105,7 @@ export default function AboutPageClient({ persons }: Props) {
           </h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 z-10 w-full items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 z-10 w-full items-end anim-reveal-up anim-d2">
           {/* Main image */}
           <div className="lg:col-span-8 h-72 lg:h-125 relative overflow-hidden bg-navy-800">
             <Image

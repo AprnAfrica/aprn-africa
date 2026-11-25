@@ -113,14 +113,14 @@ export default function HeroSection({
       <div className="relative z-10 max-w-360 mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left column */}
         <div className="lg:col-span-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 mb-8 anim-reveal-up">
             <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse" />
             <span className="text-xs font-semibold text-gold-500 uppercase tracking-widest">
               {badge}
             </span>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-8 text-white">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-8 text-white anim-reveal-up anim-d1">
             {headline ? (
               <AccentHeading text={headline} accent={headlineAccent} />
             ) : (
@@ -132,11 +132,11 @@ export default function HeroSection({
             )}
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed font-light border-l-2 border-gold-500/50 pl-6">
+          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed font-light border-l-2 border-gold-500/50 pl-6 anim-reveal-up anim-d2">
             {subtext_}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 anim-reveal-up anim-d3">
             <button className="px-8 py-4 bg-gold-500 hover:bg-gold-400 active:scale-95 text-navy-900 font-bold tracking-wide transition-all rounded-sm shadow-[0_0_20px_rgba(212,160,23,0.2)] flex items-center justify-center gap-3 cursor-pointer">
               {btn1} <i className="fa-solid fa-arrow-right" />
             </button>
@@ -148,7 +148,7 @@ export default function HeroSection({
         </div>
 
         {/* Right column — metrics panel */}
-        <div className="lg:col-span-4 hidden lg:block">
+        <div className="lg:col-span-4 hidden lg:block anim-reveal-left anim-d2">
           <div className="glass-panel p-6 rounded-sm relative">
             <div className="absolute -top-3 -right-3 w-20 h-20 bg-gold-500/10 blur-xl rounded-full" />
             <div className="flex justify-between items-center mb-6 border-b border-navy-700 pb-4">

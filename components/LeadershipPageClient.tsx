@@ -103,27 +103,27 @@ export default function LeadershipPageClient({ persons, teamMembers = [], youthA
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-gold-500/3 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-navy-800/50 mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-navy-800/50 mb-8 anim-reveal-up">
             <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse" />
             <span className="text-xs font-medium tracking-widest text-gold-500 uppercase">Institutional Leadership</span>
           </div>
 
           <h1
-            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-8 text-white"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-8 text-white anim-reveal-up anim-d1"
             style={{ fontFamily: "var(--font-playfair), serif" }}
           >
             Leadership &amp; <br />
             <span className="italic text-gold-500">Strategic</span> Advisory
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed anim-reveal-up anim-d2">
             Guiding Africa&apos;s pipeline engineering and infrastructure future through collaboration,
             research, and technical leadership.
           </p>
         </div>
 
         {/* Mandate card */}
-        <div className="mt-24 max-w-5xl mx-auto w-full">
+        <div className="mt-24 max-w-5xl mx-auto w-full anim-reveal-up anim-d3">
           <div className="glass-panel p-8 rounded-sm border border-gold-500/20 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <h3

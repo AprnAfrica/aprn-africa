@@ -92,17 +92,17 @@ export default async function InsightsPage() {
         {/* -- Hero ------------------------------------------------ */}
         <section className="pt-32 pb-16 px-6 lg:px-12 border-b border-navy-800">
           <div className="max-w-360 mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-gold-500/30 bg-gold-500/10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-gold-500/30 bg-gold-500/10 anim-reveal-up">
               <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse" />
               <span className="text-xs font-semibold text-gold-500 uppercase tracking-widest">APRN Publishing</span>
             </div>
             <h1
-              className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 leading-tight"
+              className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 leading-tight anim-reveal-up anim-d1"
               style={{ fontFamily: "var(--font-oswald), sans-serif" }}
             >
               Infrastructure <span className="text-gold-500">Insights</span>
             </h1>
-            <p className="text-slate-400 text-xl max-w-2xl leading-relaxed">
+            <p className="text-slate-400 text-xl max-w-2xl leading-relaxed anim-reveal-up anim-d2">
               Intelligence briefs, research reports, and editorial insights shaping Africa&apos;s engineering and pipeline future.
             </p>
 

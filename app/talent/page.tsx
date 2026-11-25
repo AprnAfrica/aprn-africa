@@ -138,25 +138,25 @@ export default function TalentPage() {
           </div>
 
           <div className="relative z-10 mx-auto max-w-360 px-4 py-32 sm:px-8">
-            <p className="text-[10px] font-bold tracking-widest text-gold-500 uppercase mb-6">
+            <p className="text-[10px] font-bold tracking-widest text-gold-500 uppercase mb-6 anim-reveal-up">
               Applications Now Open
             </p>
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-240"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-240 anim-reveal-up anim-d1"
               style={{ fontFamily: "var(--font-playfair), serif" }}
             >
               Pipeline Talent
               <br />
               <span className="text-gold-500">Initiative</span>
             </h1>
-            <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-160 leading-relaxed">
+            <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-160 leading-relaxed anim-reveal-up anim-d2">
               APRN is building Africa&apos;s next generation of pipeline
               engineering professionals. We are selecting First Class
               engineering graduates from across the continent for specialised
               industry training delivered in partnership with EITEP.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 anim-reveal-up anim-d3">
               <Link
                 href="/talent/apply"
                 className="inline-flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold uppercase tracking-widest px-8 py-4 text-sm transition-colors"
