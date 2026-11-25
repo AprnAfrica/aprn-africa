@@ -282,43 +282,46 @@ export type Database = {
       }
       payments: {
         Row: {
-          amount_ngn: number
+          amount: number
           created_at: string
           currency: string
           id: string
           metadata: Json
           paid_at: string | null
+          payment_ref: string
           payment_type: string
-          paystack_ref: string
-          paystack_txn_id: string | null
+          provider: string
+          provider_txn_id: string | null
           related_id: string | null
           status: string
           user_id: string
         }
         Insert: {
-          amount_ngn: number
+          amount: number
           created_at?: string
           currency?: string
           id?: string
           metadata?: Json
           paid_at?: string | null
+          payment_ref: string
           payment_type: string
-          paystack_ref: string
-          paystack_txn_id?: string | null
+          provider?: string
+          provider_txn_id?: string | null
           related_id?: string | null
           status?: string
           user_id: string
         }
         Update: {
-          amount_ngn?: number
+          amount?: number
           created_at?: string
           currency?: string
           id?: string
           metadata?: Json
           paid_at?: string | null
+          payment_ref?: string
           payment_type?: string
-          paystack_ref?: string
-          paystack_txn_id?: string | null
+          provider?: string
+          provider_txn_id?: string | null
           related_id?: string | null
           status?: string
           user_id?: string
