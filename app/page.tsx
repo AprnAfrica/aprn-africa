@@ -26,6 +26,7 @@ import ResearchSection from "@/components/ResearchSection";
 import LatestInsightsSection from "@/components/LatestInsightsSection";
 import RoadmapSection from "@/components/RoadmapSection";
 import CTASection from "@/components/CTASection";
+import TrainingBanner from "@/components/TrainingBanner";
 import Footer from "@/components/Footer";
 import { sanityFetch } from "@/lib/sanity/fetch";
 import { HOMEPAGE_CONFIG_QUERY, type HomepageConfig } from "@/lib/queries/homepage";
@@ -104,6 +105,7 @@ export default async function Home() {
           primaryButtonLabel={config?.heroPrimaryButtonLabel}
           secondaryButtonLabel={config?.heroSecondaryButtonLabel}
         />
+        <TrainingBanner />
         <AboutSection
           heading={config?.aboutHeading}
           description={config?.aboutDescription}
