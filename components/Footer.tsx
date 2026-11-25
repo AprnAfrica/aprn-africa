@@ -4,27 +4,26 @@ import type { SiteSettingsFooter, FooterLink } from "@/lib/queries/siteSettings"
 
 const DEFAULT_INITIATIVES: FooterLink[] = [
   { label: "Engineering Academy",   href: "/training" },
+  { label: "Talent Initiative",     href: "/talent" },
   { label: "Policy Think-Tank",     href: "/insights" },
   { label: "Data Observatory",      href: "/research" },
   { label: "Pipeline Intelligence", href: "/intelligence/pipelines" },
-  { label: "Research Grants",       href: "/contact" },
 ];
 
 const DEFAULT_ORGANISATION: FooterLink[] = [
-  { label: "About APRN",      href: "/about" },
-  { label: "Leadership",      href: "/leadership" },
-  { label: "Member Directory", href: "/partnerships" },
-  { label: "Careers",         href: "/contact" },
-  { label: "Press & Media",   href: "/contact" },
+  { label: "About APRN",    href: "/about" },
+  { label: "Leadership",    href: "/leadership" },
+  { label: "Partnerships",  href: "/partnerships" },
+  { label: "Events",        href: "/events" },
+  { label: "Contact Us",    href: "/contact" },
 ];
 
 const DEFAULT_RESOURCES: FooterLink[] = [
-  { label: "Pipeline Directory",  href: "/intelligence/pipelines" },
   { label: "Research Library",    href: "/research" },
-  { label: "Standards & Codes",   href: "/research" },
+  { label: "Pipeline Directory",  href: "/intelligence/pipelines" },
   { label: "Training Calendar",   href: "/training" },
-  { label: "Newsletter",          href: "/newsletter" },
-  { label: "Contact Us",          href: "/contact" },
+  { label: "Newsletter",         href: "/newsletter" },
+  { label: "Join APRN",          href: "/membership" },
 ];
 
 interface FooterProps {
@@ -96,7 +95,7 @@ export default function Footer({ siteSettings }: FooterProps) {
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-slate-400 hover:text-gold-500 transition-colors"
               >
-                <i className="fa-brands fa-twitter" />
+                <i className="fa-brands fa-x-twitter" />
               </a>
             </div>
           </div>
@@ -128,7 +127,6 @@ export default function Footer({ siteSettings }: FooterProps) {
           <div className="flex gap-6 text-xs text-slate-500">
             <Link href="/privacy" className="hover:text-gold-500 hover:translate-x-0.5 transition-all duration-200">Privacy Policy</Link>
             <Link href="/terms"   className="hover:text-gold-500 hover:translate-x-0.5 transition-all duration-200">Terms of Use</Link>
-            <Link href="/privacy" className="hover:text-gold-500 hover:translate-x-0.5 transition-all duration-200">Cookie Policy</Link>
           </div>
         </div>
       </div>
