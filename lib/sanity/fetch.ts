@@ -3,7 +3,7 @@ import { client } from './client'
 // Content types that change frequently — short cache
 const FAST_TAGS = new Set([
   // homepage / listing pages
-  'newsletter', 'intelligence', 'insights', 'training', 'leadership', 'partnerships', 'events', 'event',
+  'homepage', 'newsletter', 'intelligence', 'insights', 'training', 'leadership', 'partnerships', 'events', 'event',
   // article-level document types — editors expect changes to appear quickly
   'editorialInsight', 'intelligenceUpdate', 'publication', 'researchReport',
 ])

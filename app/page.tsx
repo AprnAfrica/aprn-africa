@@ -38,7 +38,7 @@ export default async function Home() {
 
   try {
     [config, siteSettings] = await Promise.all([
-      sanityFetch<HomepageConfig>(HOMEPAGE_CONFIG_QUERY, {}, ["homepageConfig"]),
+      sanityFetch<HomepageConfig>(HOMEPAGE_CONFIG_QUERY, {}, ["homepage"]),
       sanityFetch<SiteSettingsFooter>(SITE_SETTINGS_FOOTER_QUERY, {}, ["site"]),
     ]);
   } catch { /* use component defaults */ }

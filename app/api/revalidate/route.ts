@@ -18,7 +18,7 @@ const TYPE_TO_TAGS: Record<string, string[]> = {
   infrastructureProject:  ["infrastructure"],
   trainingProgram:        ["training"],
   organizationPartner:    ["partnerships"],
-  person:                 ["leadership"],
+  person:                 ["leadership", "homepage"],
   homepageConfig:         ["homepage"],
   siteSettings:           ["site"],
   topic:                  ["insights", "newsletter"],
